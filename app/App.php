@@ -24,7 +24,7 @@ function parseTransaction(array $transaction): array
     $amount = (float)str_replace(['$', ','], '', $amount);
 
     return [
-        'date' => formatDate($date),
+        'date' => $date,
         'checkNumber' => $checkNumber,
         'description' => $description,
         'amount' => $amount,
@@ -65,4 +65,23 @@ function getAllTransactions(string $dirPath, bool $asOneArray = true): array
     }
 
     return $transactions;
+}
+
+function calculateTotals(array $transactions): array
+{
+    $totals = ['netTotal' => 0, 'totalIncome' => 0, 'totalExpense' => 0];
+
+    foreach ($transactions as $transaction) {
+        $amount = $transaction['amount'];
+
+        $totals['netTotal'] += $amount;
+
+        if ($amount >= 0) {
+            $totals['totalIncome'] += $amount;
+        } else {
+            $totals['totalExpense'] += $amount;
+        }
+    }
+
+    return $totals;
 }

@@ -12,5 +12,9 @@ require_once APP_PATH . 'helpers.php';
 require_once APP_PATH . 'App.php';
 
 $transactions = getAllTransactions(FILES_PATH);
+$totals = calculateTotals($transactions);
 
-view('transactions.php', ['transactions' => $transactions]);
+view('transactions.php', [
+    'transactions' => $transactions,
+    'totals' => $totals,
+]);
