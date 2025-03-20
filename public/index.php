@@ -9,9 +9,8 @@ define('FILES_PATH', $root . 'transaction_files' . DIRECTORY_SEPARATOR);
 define('VIEWS_PATH', $root . 'views' . DIRECTORY_SEPARATOR);
 
 require_once APP_PATH . 'helpers.php';
+require_once APP_PATH . 'App.php';
 
 $transactions = getAllTransactions(FILES_PATH);
 
-print_array($transactions);
-
-//view('transactions.php');
+view('transactions.php', ['transactions' => $transactions]);

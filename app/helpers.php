@@ -14,58 +14,32 @@ function println(string $string): void
     echo $string . '<br />';
 }
 
-function view(string $viewPath): mixed
+function formatDate(string $date, string $format = 'M j, Y'): string
 {
+    return date($format, strtotime($date));
+}
+
+function formatDollarAmount(float $amount): string
+{
+    $isNegative = $amount < 0;
+    return ($isNegative ? '-' : '') . '$' . number_format(abs($amount), 2);
+}
+
+function amountColor(float $amount): string
+{
+    if ($amount > 0) {
+        return 'green';
+    }
+
+    if ($amount < 0) {
+        return 'red';
+    }
+
+    return 'black';
+}
+
+function view(string $viewPath, array $params = []): mixed
+{
+    extract($params);
     return require VIEWS_PATH . $viewPath;
-}
-
-function getTransactionFiles(string $dirPath): array
-{
-    $files = [];
-
-    foreach ((scandir($dirPath)) as $file) {
-        if (is_dir($file)) {
-            continue;
-        }
-
-        $files[] = $dirPath . $file;
-    }
-
-    return $files;
-}
-
-function getTransactionsFromFile(string $filename): array
-{
-    $transactions = [];
-
-    if (!file_exists($filename)) {
-        trigger_error("File {$filename} doesn not exists.", E_USER_ERROR);
-    }
-
-    $file = fopen($filename, 'r');
-
-    fgetcsv($file);
-
-    while (($transaction = fgetcsv($file)) !== false) {
-        $transactions[] = $transaction;
-    }
-
-    return $transactions;
-}
-
-function getAllTransactions(string $dirPath, bool $asOneArray = true): array
-{
-    $filenames = getTransactionFiles($dirPath);
-
-    $transactions = [];
-
-    foreach ($filenames as $filename) {
-        if ($asOneArray) {
-            $transactions = [...$transactions, ...getTransactionsFromFile($filename)];
-        } else {
-            $transactions[] = getTransactionsFromFile($filename);
-        }
-    }
-
-    return $transactions;
 }

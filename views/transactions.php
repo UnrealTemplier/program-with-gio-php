@@ -34,7 +34,18 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- YOUR CODE -->
+            <?php global $transactions; ?>
+            <?php foreach ($transactions as $transaction): ?>
+            <?php $amount = $transaction['amount']; ?>
+                <tr>
+                  <td><?= $transaction['date'] ?></td>
+                  <td><?= $transaction['checkNumber'] ?></td>
+                  <td><?= $transaction['description'] ?></td>
+                  <td style="color: <?= amountColor($amount) ?>">
+                      <?= formatDollarAmount($amount) ?>
+                  </td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
             <tfoot>
                 <tr>
