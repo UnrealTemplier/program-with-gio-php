@@ -8,4 +8,10 @@ define('APP_PATH', $root . 'app' . DIRECTORY_SEPARATOR);
 define('FILES_PATH', $root . 'transaction_files' . DIRECTORY_SEPARATOR);
 define('VIEWS_PATH', $root . 'views' . DIRECTORY_SEPARATOR);
 
-/* YOUR CODE (Instructions in README.md) */
+require_once APP_PATH . 'helpers.php';
+
+$transactions = getAllTransactions(FILES_PATH);
+
+print_array($transactions);
+
+//view('transactions.php');
