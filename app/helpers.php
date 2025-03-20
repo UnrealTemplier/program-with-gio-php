@@ -19,16 +19,16 @@ function view(string $viewPath): mixed
     return require VIEWS_PATH . $viewPath;
 }
 
-function getTransactionFiles(string $path): array
+function getTransactionFiles(string $dirPath): array
 {
     $files = [];
 
-    foreach ((scandir($path)) as $file) {
+    foreach ((scandir($dirPath)) as $file) {
         if (is_dir($file)) {
             continue;
         }
 
-        $files[] = $path . $file;
+        $files[] = $dirPath . $file;
     }
 
     return $files;
@@ -53,18 +53,18 @@ function getTransactionsFromFile(string $filename): array
     return $transactions;
 }
 
-function getAllTransactions(string $path): array
+function getAllTransactions(string $dirPath, bool $asOneArray = true): array
 {
-    $filenames = getTransactionFiles($path);
-
-    if (empty($filenames)) {
-        return [];
-    }
+    $filenames = getTransactionFiles($dirPath);
 
     $transactions = [];
 
     foreach ($filenames as $filename) {
-        $transactions = [...$transactions, ...getTransactionsFromFile($filename)];
+        if ($asOneArray) {
+            $transactions = [...$transactions, ...getTransactionsFromFile($filename)];
+        } else {
+            $transactions[] = getTransactionsFromFile($filename);
+        }
     }
 
     return $transactions;
