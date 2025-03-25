@@ -1,0 +1,19 @@
+services:
+  nginx:
+    image: nginx:1.26.3-alpine
+    container_name: program-with-gio-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./../src:/var/www
+      - ./nginx:/etc/nginx/conf.d
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: program-with-gio-app
+    restart: always
+    working_dir: /var/www
+    volumes:
+      - ./../src:/var/www
