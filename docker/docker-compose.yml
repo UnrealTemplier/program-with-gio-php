@@ -1,19 +1,58 @@
 services:
   nginx:
-    image: nginx:1.26.3-alpine
-    container_name: program-with-gio-nginx
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    container_name: gio-nginx
     restart: always
     ports:
       - "80:80"
     volumes:
-      - ./../src:/var/www
-      - ./nginx:/etc/nginx/conf.d
-  app:
+      - ./../src:/var/www/html
+    depends_on:
+      - php
+      - mysql
+  php:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: program-with-gio-app
+      dockerfile: php.dockerfile
+    container_name: gio-php
     restart: always
-    working_dir: /var/www
+    user: gio:gio
+    working_dir: /var/www/html
     volumes:
-      - ./../src:/var/www
+      - ./../src:/var/www/html
+  mysql:
+    image: mysql:9.2.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./../mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: gio
+      MYSQL_USER: gio
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+  composer:
+    build:
+      context: .
+      dockerfile: composer.dockerfile
+    user: gio:gio
+    volumes:
+      - ./../src:/var/www/html
+  npm:
+    image: node:current-alpine
+    working_dir: /var/www/html
+    volumes:
+      - ./../src:/var/www/html
+    entrypoint: ["npm"]
+  artisan:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    working_dir: /var/www/html
+    volumes:
+      - ./../src:/var/www/html
+    depends_on:
+      - mysql
+    entrypoint: ["php", "/var/www/html/artisan"]
