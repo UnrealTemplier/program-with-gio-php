@@ -1,9 +1,9 @@
+name: gio-php
 services:
   nginx:
     build:
       context: .
       dockerfile: nginx.dockerfile
-    container_name: gio-nginx
     restart: always
     ports:
       - "80:80"
@@ -16,7 +16,6 @@ services:
     build:
       context: .
       dockerfile: php.dockerfile
-    container_name: gio-php
     restart: always
     user: gio:gio
     working_dir: /var/www/html
