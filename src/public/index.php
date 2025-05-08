@@ -1,5 +1,10 @@
 <?php
 
-echo '<pre>';
-print_r($_SERVER);
-echo '</pre>';
+declare(strict_types=1);
+
+require_once './../helpers.php';
+
+printLn('Hello!');
+printLn('World!');
+
+printArray($_SERVER);
