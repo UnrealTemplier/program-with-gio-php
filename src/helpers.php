@@ -9,9 +9,9 @@ function printArray(array $array): void
     echo '</pre>';
 }
 
-function printLn(string $string): void
+function printLn(mixed $value = ''): void
 {
-    echo $string . '<br />';
+    echo $value . '<br />';
 }
 
 

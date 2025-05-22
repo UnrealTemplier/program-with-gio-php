@@ -5,66 +5,68 @@ declare(strict_types=1);
 require_once './../helpers.php';
 require_once '../Transaction.php';
 
-// object's destructor will be called as soon
-// as the object's reference not needed anymore
-// e.g. create object on the fly (without variable holding its reference)
-$amount1 = (new Transaction(100, 'Transaction 1'))
-    ->addTax(8)
-    ->addDiscount(10)
-    ->getAmount();
+$json = '{"a": 1, "b": 2, "c": 3}';
 
-var_dump($amount1);
+// decode JSON to associative array
+//$decode = json_decode($json, true);
+
+// decode JSON to stdClass object
+$decode = json_decode($json);
+
+var_dump($decode);
+
+printLn();
+printLn();
+
+// JSON keys can be used as object's properties
+// if we decoded JSON to stdClass object
+printLn($decode->a);
+printLn($decode->b);
+printLn($decode->c);
+
+printLn();
+printLn();
+
+// we can create empty stdClass object
+// and assign arbitrary properties
+$obj = new \stdClass();
+$obj->a = 10;
+$obj->b = 20;
+
+var_dump($obj);
+
+printLn();
+printLn();
+
+// we can convert array to stdClass object
+// by casting to object
+$arr = ['A', 'B', 'C'];
+$obj = (object)$arr;
+
+// cast object will receive array indices as keys
+var_dump($obj);
+
+printLn();
+
+// to use numeric keys on objects
+// we must surround them with curly braces
+printLn($obj->{1});
 
 
-echo '<br/>';
-echo '<br/>';
+printLn();
+printLn();
 
-// if there's a variable holding a reference to an object
-// then the object's destructor will be called at the end of the script
-$transaction2 = (new Transaction(100, 'Transaction 2'))
-    ->addTax(8)
-    ->addDiscount(10);
+// when we convert scalar value to stdClass object
+// then the key will be 'scalar'
+$obj1 = (object)1;
+$obj2 = (object)true;
 
-var_dump($transaction2->getAmount());
+var_dump($obj1);
+printLn();
+var_dump($obj2);
 
+printLn();
+var_dump($obj1->scalar);
 
-echo '<br/>';
-echo '<br/>';
-
-// objects' destructors are called at the end of the script
-// in reverse order of creation
-// e.g.
-// Transaction1 constructor
-// Transaction2 constructor
-// Transaction3 constructor
-// Transaction3 destructor
-// Transaction2 destructor
-// Transaction1 destructor
-$transaction3 = (new Transaction(100, 'Transaction 3'))
-    ->addTax(8)
-    ->addDiscount(10);
-
-$amount3 = $transaction3->getAmount();
-
-var_dump($amount3);
-
-
-echo '<br/>';
-echo '<br/>';
-
-$transaction4 = (new Transaction(100, 'Transaction 4'))
-    ->addTax(8)
-    ->addDiscount(10);
-
-$amount4 = $transaction4->getAmount();
-
-// unset object or assign it to null
-// will call the object's destructor immediately
-//$transaction4 = null;
-unset($transaction4);
-
-// if exit called then ALL destructors will be called
-// immediately no matter what
-//exit;
-
-var_dump($amount4);
+printLn();
+var_dump($obj2->scalar);
