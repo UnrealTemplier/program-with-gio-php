@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/Customer.php';
+
 class Transaction
 {
+    public ?Customer $customer = null;
+
     public function __construct(
         public float $amount,
-        public string $description = 'Default',
-        private ?string $name = null,
-    ) {
-        printLn($amount);
-        printLn($this->amount);
-        printLn($this->description);
-        var_dump($this->name);
-    }
+        public string $description,
+    ) {}
 }
