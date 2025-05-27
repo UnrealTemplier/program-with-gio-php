@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace PaymentGateway\Paddle;
 
-require_once __DIR__ . '/CustomerProfile.php';
+require_once __DIR__ . '/../../Notification/Email.php';
 
 class Transaction
 {
-    public function __construct(public CustomerProfile $customerProfile)
+    public function __construct()
     {
-        $dateTime = new \DateTime;
+        $email = new \Notification\Email;
+        var_dump($email);
+        print_line();
     }
 }

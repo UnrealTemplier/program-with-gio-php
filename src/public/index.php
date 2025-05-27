@@ -6,10 +6,9 @@ require_once './../helpers.php';
 require_once '../PaymentGateway/Stripe/Transaction.php';
 require_once '../PaymentGateway/Paddle/Transaction.php';
 
-use PaymentGateway\Paddle\CustomerProfile;
 use PaymentGateway\Paddle\Transaction;
 
-var_dump(new Transaction(new CustomerProfile()));
+var_dump(new Transaction());
 
 print_line();
 print_line();
