@@ -3,9 +3,15 @@
 declare(strict_types=1);
 
 require_once './../helpers.php';
-require_once '../Transaction.php';
+require_once '../PaymentGateway/Stripe/Transaction.php';
+require_once '../PaymentGateway/Paddle/Transaction.php';
 
-$transaction = new Transaction(15, 'Default');
-$transaction->customer = new Customer();
+use PaymentGateway\Paddle\CustomerProfile;
+use PaymentGateway\Paddle\Transaction;
 
-printLn($transaction->customer?->paymentProfile?->id);
+var_dump(new Transaction(new CustomerProfile()));
+
+print_line();
+print_line();
+
+var_dump(new PaymentGateway\Stripe\Transaction());
