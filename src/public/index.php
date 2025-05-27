@@ -6,11 +6,22 @@ require_once './../helpers.php';
 require_once '../PaymentGateway/Stripe/Transaction.php';
 require_once '../PaymentGateway/Paddle/Transaction.php';
 
-use PaymentGateway\Paddle\Transaction;
+// import whole namespace
+use PaymentGateway\Paddle;
 
-var_dump(new Transaction());
+// import whole namespace with an alias
+use PaymentGateway\Paddle as PGPaddle;
+
+// import classes with aliases
+use PaymentGateway\Paddle\Transaction as PaddleTransaction;
+use PaymentGateway\Stripe\Transaction as StripeTransaction;
+
+// group class imports by namespace
+use PaymentGateway\Paddle\{Transaction, CustomerProfile};
+
+var_dump(new PaddleTransaction());
 
 print_line();
 print_line();
 
-var_dump(new PaymentGateway\Stripe\Transaction());
+var_dump(new StripeTransaction());
