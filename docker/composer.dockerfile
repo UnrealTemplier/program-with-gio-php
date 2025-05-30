@@ -1,7 +1,7 @@
 FROM composer:2.2.25
 
-ENV COMPOSER_GROUP=gio
-ENV COMPOSER_USER=gio
-RUN adduser -g ${COMPOSER_GROUP} -s /bin/sh -D ${COMPOSER_USER}
+#RUN addgroup -g ${PGID} ut && adduser -u ${PUID} -G ut -s /bin/sh -D ut
 
 WORKDIR /var/www/html
+
+#USER ut

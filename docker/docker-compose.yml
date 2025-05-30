@@ -1,9 +1,12 @@
-name: gio-php
+name: php-server
 services:
   nginx:
     build:
       context: .
       dockerfile: nginx.dockerfile
+      #args:
+        #PUID: 1001
+        #PGID: 1001
     restart: always
     ports:
       - "80:80"
@@ -16,8 +19,10 @@ services:
     build:
       context: .
       dockerfile: php.dockerfile
+      #args:
+        #PUID: 1001
+        #PGID: 1001
     restart: always
-    user: gio:gio
     working_dir: /var/www/html
     volumes:
       - ./../src:/var/www/html
@@ -28,15 +33,18 @@ services:
     volumes:
       - ./../mysql:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: gio
-      MYSQL_USER: gio
+      MYSQL_DATABASE: ut
+      MYSQL_USER: ut
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
   composer:
     build:
       context: .
       dockerfile: composer.dockerfile
-    user: gio:gio
+      #args:
+        #PUID: 1001
+        #PGID: 1001
+    working_dir: /var/www/html
     volumes:
       - ./../src:/var/www/html
   npm:
