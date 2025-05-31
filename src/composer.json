@@ -1,0 +1,7 @@
+{
+    "name": "ut/php-the-right-way",
+    "type": "project",
+    "require": {
+        "ramsey/uuid": "^4.7"
+    }
+}
