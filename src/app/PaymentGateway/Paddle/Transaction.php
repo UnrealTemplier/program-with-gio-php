@@ -8,31 +8,15 @@ use App\Enums\Status;
 
 class Transaction
 {
-    private const array ALL_STATUSES = [
-        Status::PAID => 'paid',
-        Status::PENDING => 'pending',
-        Status::DECLINED => 'declined'
-    ];
-
-    public string $status;
+    private static int $count = 0;
 
     public function __construct()
     {
-        $this->setStatus(Status::PENDING);
+        self::$count++;
     }
 
-    /**
-     * @param string $status
-     * @return $this
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function setStatus(string $status): self
+    public static function getCount()
     {
-        if (!isset(self::ALL_STATUSES[$status]))
-            throw new \InvalidArgumentException('Incorrect status.');
-
-        $this->status = $status;
-        return $this;
+        return self::$count;
     }
 }

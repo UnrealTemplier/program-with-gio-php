@@ -9,17 +9,13 @@ use App\Enums\Status;
 use App\PaymentGateway\Paddle\Transaction;
 
 $transaction = new Transaction();
+print_line(Transaction::getCount());
 
-print_line($transaction->status);
+$transaction = new Transaction();
+print_line(Transaction::getCount());
 
-print_line();
+$transaction = new Transaction();
+print_line(Transaction::getCount());
 
-$transaction->setStatus(Status::PAID);
-print_line($transaction->status);
-
-print_line();
-
-print_line('Trying to set abracadbra status:');
-$transaction->setStatus('abracadabra');
-print_line($transaction->status);
-
+$transaction = new Transaction();
+print_line(Transaction::getCount());
