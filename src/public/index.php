@@ -9,17 +9,16 @@ use App\PaymentGateway\Paddle\Transaction;
 
 $transaction = new Transaction();
 
-// using class constants
 print_line($transaction->status);
+
+print_line();
+
 $transaction->setStatus(Transaction::STATUS_PAID);
 print_line($transaction->status);
 
 print_line();
 
-// from class ref and from object ref
-print_line(Transaction::STATUS_DECLINED);
-print_line($transaction::STATUS_PAID);
-
-print_line();
-
+print_line('Trying to set abracadbra status:');
+$transaction->setStatus('abracadabra');
+print_line($transaction->status);
 
