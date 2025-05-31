@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-spl_autoload_register(function($path) {
-    $path = __DIR__ . '/../' . lcfirst(str_replace('\\', '/', $path) . '.php');
-    require_once $path;
-});
-
 use App\PaymentGateway\Paddle\Transaction;
+
+$id = new \Ramsey\Uuid\UuidFactory();
+echo $id->uuid4();
+
+print_line();
+print_line();
 
 var_dump(new Transaction());

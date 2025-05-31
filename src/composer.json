@@ -1,7 +1,12 @@
 {
-    "name": "ut/php-the-right-way",
-    "type": "project",
-    "require": {
-        "ramsey/uuid": "^4.7"
+  "name": "ut/php-the-right-way",
+  "type": "project",
+  "require": {
+    "ramsey/uuid": "^4.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
     }
+  }
 }
