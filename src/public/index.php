@@ -7,10 +7,19 @@ require_once './../helpers.php';
 
 use App\PaymentGateway\Paddle\Transaction;
 
-$id = new \Ramsey\Uuid\UuidFactory();
-echo $id->uuid4();
+$transaction = new Transaction();
+
+// using class constants
+print_line($transaction->status);
+$transaction->setStatus(Transaction::STATUS_PAID);
+print_line($transaction->status);
 
 print_line();
+
+// from class ref and from object ref
+print_line(Transaction::STATUS_DECLINED);
+print_line($transaction::STATUS_PAID);
+
 print_line();
 
-var_dump(new Transaction());
+
