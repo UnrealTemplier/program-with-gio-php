@@ -5,17 +5,20 @@ declare(strict_types=1);
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-use App\Enums\Status;
-use App\PaymentGateway\Paddle\Transaction;
+use App\DB;
 
-$transaction = new Transaction();
-print_line(Transaction::getCount());
+// If we don't use singleton pattern
+// then every instantiation will call the constructor
+//$db = new DB([]);
+//$db = new DB([]);
+//$db = new DB([]);
+//$db = new DB([]);
+//$db = new DB([]);
 
-$transaction = new Transaction();
-print_line(Transaction::getCount());
-
-$transaction = new Transaction();
-print_line(Transaction::getCount());
-
-$transaction = new Transaction();
-print_line(Transaction::getCount());
+// If we use singleton pattern
+// then constructor will be called only once
+$db = DB::getInstance([]);
+$db = DB::getInstance([]);
+$db = DB::getInstance([]);
+$db = DB::getInstance([]);
+$db = DB::getInstance([]);
