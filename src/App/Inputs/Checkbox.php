@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Inputs;
 
 class Checkbox extends Boolean
 {
