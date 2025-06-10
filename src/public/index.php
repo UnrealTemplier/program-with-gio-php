@@ -2,29 +2,28 @@
 
 declare(strict_types=1);
 
-use App\{AllInOneCoffeeMaker, CappuccinoMaker, CoffeeMaker, LatteMaker};
+use App\Traits\SomeTrait;
 
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-$coffeeMaker = new CoffeeMaker();
-$coffeeMaker->makeCoffee();
+$obj = new class(1, 2, 3) extends \Reflection {
+    use SomeTrait;
+
+    public function __construct(public int $x, public int $y, public int $z) {}
+
+    public function foo(): void
+    {
+        print_line('FOO');
+    }
+};
+
+var_dump($obj);
 
 print_line();
 
-$latteMaker = new LatteMaker();
-$latteMaker->makeCoffee();
-$latteMaker->makeLatte();
+$obj->foo();
 
 print_line();
 
-$cappuccinoMaker = new CappuccinoMaker();
-$cappuccinoMaker->makeCoffee();
-$cappuccinoMaker->makeCappuccino();
-
-print_line();
-
-$allInOneCoffeeMaker = new AllInOneCoffeeMaker();
-$allInOneCoffeeMaker->makeCoffee();
-$allInOneCoffeeMaker->makeLatte();
-$allInOneCoffeeMaker->makeCappuccino();
+print_line('Anonymous class name: ' . get_class($obj));
