@@ -4,10 +4,8 @@ namespace App;
 
 class ClassA
 {
-    public static string $name = 'A';
-
-    public static function getName(): string
+    public static function make(): static
     {
-        return static::$name;
+        return new static();
     }
 }
