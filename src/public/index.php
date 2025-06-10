@@ -15,8 +15,6 @@ print_line();
 $latteMaker = new LatteMaker();
 $latteMaker->makeCoffee();
 $latteMaker->makeLatte();
-$latteMaker::$x = 2;
-$latteMaker::foo();
 
 print_line();
 
@@ -30,5 +28,3 @@ $allInOneCoffeeMaker = new AllInOneCoffeeMaker();
 $allInOneCoffeeMaker->makeCoffee();
 $allInOneCoffeeMaker->makeLatte();
 $allInOneCoffeeMaker->makeCappuccino();
-$allInOneCoffeeMaker::$x = 3;
-$allInOneCoffeeMaker::foo();
