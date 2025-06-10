@@ -12,4 +12,7 @@ class AllInOneCoffeeMaker extends CoffeeMaker
 
     use LatteTrait;
     use CappuccinoTrait;
+
+    // we can redefine trait's property only if it's completely the same
+    public string $milkType = 'whole-milk';
 }

@@ -21,9 +21,6 @@ print_line();
 $cappuccinoMaker = new CappuccinoMaker();
 $cappuccinoMaker->makeCoffee();
 $cappuccinoMaker->makeCappuccino();
-echo '<strong>';
-$cappuccinoMaker->makeLatte();
-echo '</strong>';
 
 print_line();
 
