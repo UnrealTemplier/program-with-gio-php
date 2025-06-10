@@ -10,17 +10,10 @@ class AllInOneCoffeeMaker extends CoffeeMaker
     // we can use traits to solve the Diamond Problem
     // it's a great way when implementations are the same
 
-    use LatteTrait;
-    use CappuccinoTrait;
-
-    public function makeCoffee(): void
-    {
-        print_line(static::class .
-            ' is making coffee (overridden in child class on top of overridden in trait)');
+    use LatteTrait {
+        LatteTrait::makeLatte as makeOriginalLatte;
     }
-
-    public function makeCappuccino(): void
-    {
-        print_line(static::class . ' is making Cappuccino (overridden in class on top of trait)');
+    use CappuccinoTrait {
+        CappuccinoTrait::makeLatte insteadof LatteTrait;
     }
 }
