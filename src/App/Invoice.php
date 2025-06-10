@@ -4,8 +4,8 @@ namespace App;
 
 class Invoice
 {
-    public function __toString(): string
+    public function __invoke(): void
     {
-        return 'This is a text description of an object of class ' . self::class;
+        print_line('Invoked');
     }
 }
