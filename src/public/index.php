@@ -7,8 +7,4 @@ require_once './../helpers.php';
 
 $invoice = new App\Invoice();
 
-$invoice->process(1, 2, 3);
-
-print_line();
-
-$invoice::processStatic('Hello', 4, 5, 6);
+$invoice->process(25, 'This is my description');
