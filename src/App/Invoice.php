@@ -4,29 +4,21 @@ namespace App;
 
 class Invoice
 {
-    // experiment with public/protected/private
-    // experiment with commenting this property out
-    protected int $amount = 36;
-
-    // __get magic method is called when object
-    // doesn't exist or inaccessible
-    // using this we can break encapsulation
-    public function __get(string $name)
+    public function __call(string $name, array $arguments)
     {
-        if (property_exists($this, $name)) {
-            return $this->$name;
-        }
-
-        return 'Property ' . $name . ' does not exist';
+        print_line($name . ' method was called.');
+        print_line('Its arguments:');
+        echo '<pre>';
+        print_r($arguments);
+        echo '</pre>';
     }
 
-    // __set magic method is called when object
-    // doesn't exist or inaccessible
-    // using this we can break encapsulation
-    public function __set(string $name, $value): void
+    public static function __callStatic(string $name, array $arguments)
     {
-        if (property_exists($this, $name)) {
-            $this->$name = $value;
-        }
+        print_line($name . ' method was called statically.');
+        print_line('Its arguments:');
+        echo '<pre>';
+        print_r($arguments);
+        echo '</pre>';
     }
 }
