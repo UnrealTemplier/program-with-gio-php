@@ -13,13 +13,18 @@ class ClassA
 
     public function bar(): object
     {
-        return new class($this->x, $this->y) {
-            public function __construct(public int $a, public int $b) {}
+        return new class($this->x, $this->y) extends ClassA {
+            public function __construct(int $a, int $b)
+            {
+                parent::__construct($a, $b);
+            }
 
             public function baz(): void
             {
-                echo $this->a . PHP_EOL;
-                echo $this->b . PHP_EOL;
+                echo $this->x . PHP_EOL;
+                echo $this->y . PHP_EOL;
+                print_line();
+                $this->foo();
             }
         };
     }
