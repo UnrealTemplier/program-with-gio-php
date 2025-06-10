@@ -6,5 +6,5 @@ use App\ClassA;
 
 class ClassB extends ClassA
 {
-    public string $name = 'B';
+    public static string $name = 'B';
 }
