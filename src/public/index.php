@@ -2,11 +2,27 @@
 
 declare(strict_types=1);
 
+use App\{AllInOneCoffeeMaker, CappuccinoMaker, CoffeeMaker, LatteMaker};
+
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-$a = \App\ClassA::make();
-$b = \App\ClassB::make();
+$coffeeMaker = new CoffeeMaker();
+$coffeeMaker->makeCoffee();
 
-print_line($a::class);
-print_line($b::class);
+print_line();
+
+$latteMaker = new LatteMaker();
+$latteMaker->makeCoffee();
+$latteMaker->makeLatte();
+
+print_line();
+
+$cappuccinoMaker = new CappuccinoMaker();
+$cappuccinoMaker->makeCoffee();
+$cappuccinoMaker->makeCappuccino();
+
+print_line();
+
+$allInOneCoffeeMaker = new AllInOneCoffeeMaker();
+$allInOneCoffeeMaker->makeCoffee();
