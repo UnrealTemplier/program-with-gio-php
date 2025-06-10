@@ -2,9 +2,21 @@
 
 namespace App;
 
-class AllInOneCoffeeMaker extends CoffeeMaker
+use App\Interfaces\CappuccinoInterface;
+use App\Interfaces\LatteInterface;
+
+class AllInOneCoffeeMaker extends CoffeeMaker implements LatteInterface, CappuccinoInterface
 {
-    // in regular case we cannot solve Diamond Problem
-    // using multiple inheritance in PHP
-    // to use both makeLatte and makeCappuccino
+    // we can use interfaces to solve the Diamond Problem
+    // it's a great way when implementations are different
+
+    public function makeLatte(): void
+    {
+        print_line(static::class . ' is making Latte 2');
+    }
+
+    public function makeCappuccino(): void
+    {
+        print_line(static::class . ' is making Cappuccino 2');
+    }
 }

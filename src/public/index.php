@@ -26,3 +26,5 @@ print_line();
 
 $allInOneCoffeeMaker = new AllInOneCoffeeMaker();
 $allInOneCoffeeMaker->makeCoffee();
+$allInOneCoffeeMaker->makeLatte();
+$allInOneCoffeeMaker->makeCappuccino();

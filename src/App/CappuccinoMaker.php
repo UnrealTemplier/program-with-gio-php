@@ -2,10 +2,12 @@
 
 namespace App;
 
-class CappuccinoMaker extends CoffeeMaker
+use App\Interfaces\CappuccinoInterface;
+
+class CappuccinoMaker extends CoffeeMaker implements CappuccinoInterface
 {
     public function makeCappuccino(): void
     {
-        print_line(static::class . ' is making Cappuccino');
+        print_line(static::class . ' is making Cappuccino 1');
     }
 }
