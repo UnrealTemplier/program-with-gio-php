@@ -13,5 +13,8 @@ class AllInOneCoffeeMaker extends CoffeeMaker
     use LatteTrait;
     use CappuccinoTrait;
 
-    public string $milkType = 'skim-milk';
+    public function getMilkType(): string
+    {
+        return 'whole-milk';
+    }
 }

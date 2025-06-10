@@ -9,12 +9,5 @@ trait LatteTrait
         print_line(static::class . ' is making Latte with ' . $this->getMilkType());
     }
 
-    public function getMilkType(): string
-    {
-        if (property_exists($this, 'milkType')) {
-            return $this->milkType;
-        }
-
-        return 'whole-milk';
-    }
+    abstract public function getMilkType(): string;
 }
