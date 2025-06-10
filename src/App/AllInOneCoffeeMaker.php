@@ -2,21 +2,14 @@
 
 namespace App;
 
-use App\Interfaces\CappuccinoInterface;
-use App\Interfaces\LatteInterface;
+use App\Traits\CappuccinoTrait;
+use App\Traits\LatteTrait;
 
-class AllInOneCoffeeMaker extends CoffeeMaker implements LatteInterface, CappuccinoInterface
+class AllInOneCoffeeMaker extends CoffeeMaker
 {
-    // we can use interfaces to solve the Diamond Problem
-    // it's a great way when implementations are different
+    // we can use traits to solve the Diamond Problem
+    // it's a great way when implementations are the same
 
-    public function makeLatte(): void
-    {
-        print_line(static::class . ' is making Latte 2');
-    }
-
-    public function makeCappuccino(): void
-    {
-        print_line(static::class . ' is making Cappuccino 2');
-    }
+    use LatteTrait;
+    use CappuccinoTrait;
 }

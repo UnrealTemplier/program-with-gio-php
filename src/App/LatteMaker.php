@@ -2,12 +2,9 @@
 
 namespace App;
 
-use App\Interfaces\LatteInterface;
+use App\Traits\LatteTrait;
 
-class LatteMaker extends CoffeeMaker implements LatteInterface
+class LatteMaker extends CoffeeMaker
 {
-    public function makeLatte(): void
-    {
-        print_line(static::class . ' is making Latte 1');
-    }
+    use LatteTrait;
 }

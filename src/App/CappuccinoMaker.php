@@ -2,12 +2,9 @@
 
 namespace App;
 
-use App\Interfaces\CappuccinoInterface;
+use App\Traits\CappuccinoTrait;
 
-class CappuccinoMaker extends CoffeeMaker implements CappuccinoInterface
+class CappuccinoMaker extends CoffeeMaker
 {
-    public function makeCappuccino(): void
-    {
-        print_line(static::class . ' is making Cappuccino 1');
-    }
+    use CappuccinoTrait;
 }
