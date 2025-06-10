@@ -4,17 +4,17 @@ namespace App\Traits;
 
 trait LatteTrait
 {
-    public string $milkType = 'whole-milk';
+    // trait's static properties are NOT SHARED between objects using this trait
+    // every such property is individual and isolated
+    public static int $x = 1;
 
     public function makeLatte(): void
     {
-        print_line(static::class . ' is making Latte with ' . $this->milkType);
+        print_line(static::class . ' is making Latte');
     }
 
-    public function setMilkType(string $value): static
+    public static function foo(): void
     {
-        $this->milkType = $value;
-
-        return $this;
+        print_line(static::$x);
     }
 }
