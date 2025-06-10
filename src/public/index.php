@@ -26,5 +26,5 @@ print_line();
 
 $allInOneCoffeeMaker = new AllInOneCoffeeMaker();
 $allInOneCoffeeMaker->makeCoffee();
-$allInOneCoffeeMaker->makeLatte();
+$allInOneCoffeeMaker->setMilkType('skim-milk')->makeLatte();
 $allInOneCoffeeMaker->makeCappuccino();

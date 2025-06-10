@@ -4,10 +4,17 @@ namespace App\Traits;
 
 trait LatteTrait
 {
+    public string $milkType = 'whole-milk';
+
     public function makeLatte(): void
     {
-        print_line(static::class . ' is making Latte with ' . $this->getMilkType());
+        print_line(static::class . ' is making Latte with ' . $this->milkType);
     }
 
-    abstract public function getMilkType(): string;
+    public function setMilkType(string $value): static
+    {
+        $this->milkType = $value;
+
+        return $this;
+    }
 }
