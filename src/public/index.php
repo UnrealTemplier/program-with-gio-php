@@ -7,6 +7,5 @@ require_once './../helpers.php';
 
 $invoice = new App\Invoice();
 
-print_line('Is object callable: ' . (is_callable($invoice) ? 'true' : 'false'));
-$invoice();
+var_dump($invoice);
 
