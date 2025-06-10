@@ -2,38 +2,20 @@
 
 declare(strict_types=1);
 
-use App\Interfaces\SomeInterface;
-use App\Traits\SomeTrait;
+use App\ClassA;
 
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-$obj = new class(1, 2, 3) extends \Reflection implements SomeInterface {
-    use SomeTrait;
+$a = new ClassA(2, 5);
+var_dump($a);
 
-    public function __construct(public int $x, public int $y, public int $z) {}
+print_line();
 
-    public function foo(): void
-    {
-        print_line('FOO');
-    }
-};
+$a->foo();
+print_line();
 
+$obj = $a->bar();
 var_dump($obj);
-
 print_line();
-
-$obj->foo();
-
-print_line();
-
-print_line('Anonymous class name: ' . get_class($obj));
-
-function bar(SomeInterface $someObj): void
-{
-    print_line($someObj::class);
-}
-
-print_line();
-
-bar($obj);
+$obj->baz();
