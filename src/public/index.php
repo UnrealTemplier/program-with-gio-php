@@ -7,4 +7,9 @@ require_once './../helpers.php';
 
 $invoice = new App\Invoice();
 
-$invoice->process(25, 'This is my description');
+print_line($invoice);
+
+print_line();
+
+print_line('Is object instance of Stringable: ' .
+    (($invoice instanceof Stringable) ? 'true' : 'false'));
