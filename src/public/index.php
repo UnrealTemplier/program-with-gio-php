@@ -21,11 +21,12 @@ print_line();
 $cappuccinoMaker = new CappuccinoMaker();
 $cappuccinoMaker->makeCoffee();
 $cappuccinoMaker->makeCappuccino();
+$cappuccinoMaker->privateMethod();
 
 print_line();
 
 $allInOneCoffeeMaker = new AllInOneCoffeeMaker();
 $allInOneCoffeeMaker->makeCoffee();
 $allInOneCoffeeMaker->makeLatte();
-$allInOneCoffeeMaker->makeOriginalLatte();
 $allInOneCoffeeMaker->makeCappuccino();
+$allInOneCoffeeMaker->callPrivateMethodIndirectly();

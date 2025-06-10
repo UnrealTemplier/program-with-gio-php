@@ -6,5 +6,7 @@ use App\Traits\CappuccinoTrait;
 
 class CappuccinoMaker extends CoffeeMaker
 {
-    use CappuccinoTrait;
+    use CappuccinoTrait {
+        CappuccinoTrait::privateMethod as public;
+    }
 }

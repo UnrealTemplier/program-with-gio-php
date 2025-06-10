@@ -10,10 +10,11 @@ class AllInOneCoffeeMaker extends CoffeeMaker
     // we can use traits to solve the Diamond Problem
     // it's a great way when implementations are the same
 
-    use LatteTrait {
-        LatteTrait::makeLatte as makeOriginalLatte;
-    }
-    use CappuccinoTrait {
-        CappuccinoTrait::makeLatte insteadof LatteTrait;
+    use LatteTrait;
+    use CappuccinoTrait;
+
+    public function callPrivateMethodIndirectly(): void
+    {
+        $this->privateMethod();
     }
 }

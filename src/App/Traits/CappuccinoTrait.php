@@ -9,8 +9,8 @@ trait CappuccinoTrait
         print_line(static::class . ' is making Cappuccino');
     }
 
-    public function makeLatte(): void
+    private function privateMethod(): void
     {
-        print_line(static::class . ' is making Latte (Cappuccino Trait)');
+        print_line('privateMethod is called');
     }
 }
