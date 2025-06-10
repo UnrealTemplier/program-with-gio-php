@@ -12,4 +12,15 @@ class AllInOneCoffeeMaker extends CoffeeMaker
 
     use LatteTrait;
     use CappuccinoTrait;
+
+    public function makeCoffee(): void
+    {
+        print_line(static::class .
+            ' is making coffee (overridden in child class on top of overridden in trait)');
+    }
+
+    public function makeCappuccino(): void
+    {
+        print_line(static::class . ' is making Cappuccino (overridden in class on top of trait)');
+    }
 }
