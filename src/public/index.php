@@ -2,25 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Customer;
-use App\Exception\OrderException;
-use App\Order;
-
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-$order = new Order(new Customer(), 24);
+$dateTime = new DateTime('03/15/2000 3:30PM');
 
-try {
-    $order->process();
-} catch (OrderException $e) {
-    print_line($e->getMessage());
-}
+print_line($dateTime->getTimezone()->getName() . ' - ' . $dateTime->format('m/d/Y g:i A'));
 
-$order = new Order(new Customer(), 25);
+$dateTime->setTimezone(new DateTimeZone('Europe/Amsterdam'))->setDate(2020, 05, 01)->setTime(14, 35);
 
-try {
-    $order->process();
-} catch (OrderException $e) {
-    print_line($e->getMessage());
-}
+print_line($dateTime->getTimezone()->getName() . ' - ' . $dateTime->format('m/d/Y g:i A'));
