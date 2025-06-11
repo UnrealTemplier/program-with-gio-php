@@ -5,36 +5,47 @@ declare(strict_types=1);
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-$date = new DateTime('05/25/2001 9:14AM');
-$interval = new DateInterval('P3M');
+print_line('Iterating DatePeriod over 1 month by 1 day (including end date):');
 
-print_line('Original: ' . $date->format('d.m.Y g:i'));
+$period = new DatePeriod(
+    new DateTime('01.01.2001'),
+    new DateInterval('P1D'),
+    new DateTime('31.01.2001'),
+    DatePeriod::INCLUDE_END_DATE,
+);
 
-$date->add($interval);
-print_line('Added 3 months: ' . $date->format('d.m.Y g:i'));
+foreach ($period as $date) {
+    print_line($date->format('d.m.Y'));
+}
 
-$date->sub($interval);
-print_line('Subtracted 3 months: ' . $date->format('d.m.Y g:i'));
+print_line();
+print_line('----------------------');
+print_line();
 
-$interval->invert = 1;
-$date->add($interval);
-print_line('Added 3 months INVERTED: ' . $date->format('d.m.Y g:i'));
+print_line('Iterating DatePeriod over 12 days by 3 days:');
 
-print_line('--------------------------');
+$period = new DatePeriod(
+    new DateTime('01.01.2001'),
+    new DateInterval('P3D'),
+    new DateTime('12.01.2001'),
+);
 
-$interval->invert = 0;
+foreach ($period as $date) {
+    print_line($date->format('d.m.Y'));
+}
 
-$from = new DateTimeImmutable();
-$to = (clone $from)->add($interval);
+print_line();
+print_line('----------------------');
+print_line();
 
-print_line('from:');
-d($from);
-print_line('to:');
-d($to);
+print_line('Iterating DatePeriod over 15 days by 3 recurrencies (excluding start date):');
 
-print_line('from equal to to:');
-d($from === $to);
+$period = new DatePeriod(
+    new DateTime('01.01.2001'),
+    new DateInterval('P3D'),
+    3, DatePeriod::EXCLUDE_START_DATE,
+);
 
-print_line('to subbed:');
-$to = $to->sub($interval);
-d($to);
+foreach ($period as $date) {
+    print_line($date->format('d.m.Y'));
+}
