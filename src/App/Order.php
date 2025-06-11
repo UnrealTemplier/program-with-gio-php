@@ -2,8 +2,7 @@
 
 namespace App;
 
-use App\Exception\MissingBillingInfoException;
-use InvalidArgumentException;
+use App\Exception\OrderException;
 
 class Order
 {
@@ -13,17 +12,16 @@ class Order
     ) {}
 
     /**
-     * @throws InvalidArgumentException
-     * @throws MissingBillingInfoException
+     * @throws OrderException
      */
     public function process(): void
     {
         if ($this->amount < 25) {
-            throw new InvalidArgumentException('Amount is too low');
+            throw OrderException::invalidAmount();
         }
 
         if (empty($this->customer->address)) {
-            throw new MissingBillingInfoException('Custom message');
+            throw OrderException::missingBillingInfo();
         }
     }
 }
