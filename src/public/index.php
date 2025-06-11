@@ -1,22 +1,18 @@
 <?php
 
-use App\Invoice;
+use App\Customer;
+use App\Exception\MissingBillingInfoException;
+use App\Order;
 
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-$invoice = new Invoice(25, 'my invoice', '123456789');
-print_line('Original:');
-d($invoice);
+$order1 = new Order(new Customer(), 25);
 
-$clonedInvoice = clone $invoice;
-print_line('Cloned:');
-d($clonedInvoice);
-
-$serObj = serialize($invoice);
-print_line('Serialized:');
-d($serObj);
-
-$invoice2 = unserialize($serObj);
-print_line('Unserialized:');
-d($invoice2);
+try {
+    $order1->process();
+} catch (InvalidArgumentException|MissingBillingInfoException $e) {
+    print_line($e->getMessage() . ' ' . $e->getFile() . ':' . $e->getLine());
+} finally {
+    print_line('Finally!');
+}
