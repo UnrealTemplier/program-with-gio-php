@@ -4,34 +4,32 @@ namespace App;
 
 class InvoiceCollection implements \Iterator
 {
-    protected int $key = 0;
-
     public function __construct(protected array $invoices)
     {
     }
 
     public function current(): Invoice
     {
-        return $this->invoices[$this->key];
+        return current($this->invoices);
     }
 
     public function next(): void
     {
-        ++$this->key;
+        next($this->invoices);
     }
 
     public function key(): int
     {
-        return $this->key;
+        return key($this->invoices);
     }
 
     public function valid(): bool
     {
-        return isset($this->invoices[$this->key]);
+        return current($this->invoices) !== false;
     }
 
     public function rewind(): void
     {
-        $this->key = 0;
+        reset($this->invoices);
     }
 }
