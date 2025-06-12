@@ -14,6 +14,9 @@ $invoiceCollection = new InvoiceCollection([
     new Invoice(67)
 ]);
 
+/**
+ * @var Invoice $invoice
+ */
 foreach ($invoiceCollection as $invoice) {
     print_line($invoice->id . ' => ' . $invoice->amount);
 }
