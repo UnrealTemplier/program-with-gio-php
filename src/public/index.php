@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Router;
 
+session_start();
+
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
@@ -18,3 +20,7 @@ $router
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 echo $router->resolve($uri, $method);
+
+d($_SESSION);
+
+d($_COOKIE);
