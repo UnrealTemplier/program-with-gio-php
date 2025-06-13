@@ -10,7 +10,8 @@ require_once './../helpers.php';
 $router = new Router();
 
 $router
-    ->register('/', function() { echo 'Home'; })
-    ->register('/invoices', function() { echo 'Invoices'; });
+    ->register('/', [App\Classes\Home::class, 'index'])
+    ->register('/invoices', [App\Classes\Invoice::class, 'index'])
+    ->register('/invoices/create', [App\Classes\Invoice::class, 'create']);
 
 echo $router->resolve($_SERVER['REQUEST_URI']);
