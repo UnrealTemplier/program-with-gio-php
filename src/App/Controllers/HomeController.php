@@ -10,7 +10,7 @@ class HomeController
 {
     public function index(): View
     {
-        return View::make('index');
+        return View::make('index', ['boo' => 'booze']);
     }
 
     public function upload(): void

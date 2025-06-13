@@ -29,6 +29,8 @@ class View
             throw new ViewNotFoundException();
         }
 
+        extract($this->params);
+
         ob_start();
         include $viewPath;
         return (string)ob_get_clean();
