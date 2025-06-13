@@ -2,21 +2,15 @@
 
 declare(strict_types=1);
 
-use App\Invoice;
-use App\InvoiceCollection;
+use App\Router;
 
 require_once './../vendor/autoload.php';
 require_once './../helpers.php';
 
-$invoiceCollection = new InvoiceCollection([
-    new Invoice(25),
-    new Invoice(45),
-    new Invoice(67)
-]);
+$router = new Router();
 
-/**
- * @var Invoice $invoice
- */
-foreach ($invoiceCollection as $invoice) {
-    print_line($invoice->id . ' => ' . $invoice->amount);
-}
+$router
+    ->register('/', function() { echo 'Home'; })
+    ->register('/invoices', function() { echo 'Invoices'; });
+
+echo $router->resolve($_SERVER['REQUEST_URI']);
