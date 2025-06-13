@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Router;
 
 const STORAGE_PATH = __DIR__ . '/../storage';
+const VIEWS_PATH = __DIR__ . '/../views';
 
 session_start();
 
@@ -14,11 +15,11 @@ require_once './../helpers.php';
 $router = new Router();
 
 $router
-    ->get('/', [App\Classes\Home::class, 'index'])
-    ->post('/upload', [App\Classes\Home::class, 'upload'])
-    ->get('/invoices', [App\Classes\Invoice::class, 'index'])
-    ->get('/invoices/create', [App\Classes\Invoice::class, 'create'])
-    ->post('/invoices/create', [App\Classes\Invoice::class, 'store']);
+    ->get('/', [App\Controllers\HomeController::class, 'index'])
+    ->post('/upload', [App\Controllers\HomeController::class, 'upload'])
+    ->get('/invoices', [App\Controllers\InvoicesController::class, 'index'])
+    ->get('/invoices/create', [App\Controllers\InvoicesController::class, 'create'])
+    ->post('/invoices/create', [App\Controllers\InvoicesController::class, 'store']);
 
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
