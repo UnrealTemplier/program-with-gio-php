@@ -33,10 +33,7 @@ services:
     volumes:
       - ./../mysql:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: ut
-      MYSQL_USER: ut
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
   composer:
     build:
       context: .
