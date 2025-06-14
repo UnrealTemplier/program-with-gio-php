@@ -31,3 +31,4 @@ auth.json
 .idea
 mysql
 /src/vendor/
+/src/storage/
