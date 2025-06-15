@@ -25,18 +25,14 @@ class HomeController
             $query = 'insert into users (email, full_name, is_active, created_at) 
                       values (:email, :name, :isActive, :createdAt)';
 
-            print_line($query);
-
             $stmt = $db->prepare($query);
-            $stmt->execute([
-                'email' => $email,
-                'name' => $name,
-                'isActive' => $isActive,
-                'createdAt' => $createdAt,
-            ]);
+            $stmt->bindValue('email', $email);
+            $stmt->bindValue('name', $name);
+            $stmt->bindParam('isActive', $isActive);
+            $stmt->bindParam('createdAt', $createdAt);
+            $stmt->execute();
 
             $id = $db->lastInsertId();
-
             print_array($db->query('select * from users where id = ' . $id)->fetchAll());
         } catch (PDOException $e) {
             print_line(
