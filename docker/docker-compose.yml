@@ -28,6 +28,7 @@ services:
       - ./../src:/var/www/html
   mysql:
     image: mysql:9.2.0
+    restart: always
     ports:
       - "3306:3306"
     volumes:
