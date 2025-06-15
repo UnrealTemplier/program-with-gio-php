@@ -34,8 +34,8 @@ class HomeController
         try {
             $db->beginTransaction();
 
-            $email = 'blair@doe.com';
-            $name = 'Blair Doe';
+            $email = 'brink@doe.com';
+            $name = 'Brink Doe';
             $isActive = 1;
             $createdAt = date('Y-m-d H:i:s', time());
             $updatedAt = date('Y-m-d H:i:s', time());
