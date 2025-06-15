@@ -24,4 +24,19 @@ $router
     ->get('/invoices/create', [InvoicesController::class, 'create'])
     ->post('/invoices/create', [InvoicesController::class, 'store']);
 
-return $router;
+$request = [
+    'uri' => $_SERVER['REQUEST_URI'],
+    'method' => $_SERVER['REQUEST_METHOD']
+];
+
+$config = [
+    'db' => [
+        'driver' => $_ENV['DB_DRIVER'],
+        'host' => $_ENV['DB_HOST'],
+        'user' => $_ENV['DB_USER'],
+        'pass' => $_ENV['DB_PASS'],
+        'database' => $_ENV['DB_NAME'],
+    ]
+];
+
+return [$router, $request, $config];

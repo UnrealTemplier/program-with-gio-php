@@ -4,38 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\App;
 use App\View;
-use PDO;
-use PDOException;
 
 class HomeController
 {
     public function index(): View
     {
-        try {
-            $dsn = $_ENV['DB_DRIVER']
-                . ':host=' . $_ENV['DB_HOST']
-                . ';dbname=' . $_ENV['DB_NAME'];
-            $user = $_ENV['DB_USER'];
-            $pass = $_ENV['DB_PASS'];
-            $db = new PDO($dsn, $user, $pass, [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            ]);
-        } catch (PDOException $e) {
-            print_line(
-                'PDOException: ' . $e->getMessage(),
-                'Error code: ' . $e->getCode(),
-                'In file: ' . $e->getFile(),
-                'At line: ' . $e->getLine(),
-                '',
-            );
-        }
+        $db = App::db();
 
         try {
             $db->beginTransaction();
 
-            $email = 'brink@doe.com';
-            $name = 'Brink Doe';
+            $email = 'tom@doe.com';
+            $name = 'Tom Doe';
             $isActive = 1;
             $createdAt = date('Y-m-d H:i:s', time());
             $updatedAt = date('Y-m-d H:i:s', time());
