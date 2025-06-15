@@ -19,13 +19,20 @@ class HomeController
             ]);
 
             $email = $_GET['email'];
-            $query = 'select * from users where email = "' . $email . '"';
+            $name = 'John Doe';
+            $isActive = 1;
+            $createdAt = date('Y-m-d H:i:s', strtotime('2025-05-15 11:38:00'));
+            $query = 'insert into users (email, full_name, is_active, created_at) 
+                      values (?, ?, ?, ?)';
 
             print_line($query);
 
-            $stmt = $db->query($query);
+            $stmt = $db->prepare($query);
+            $stmt->execute([$email, $name, $isActive, $createdAt]);
 
-            print_array($stmt->fetchAll());
+            $id = $db->lastInsertId();
+
+            print_array($db->query('select * from users where id = ' . $id)->fetchAll());
         } catch (PDOException $e) {
             print_line('PDOException: ' . $e->getMessage(),
                 'Error code: ' . $e->getCode(),
