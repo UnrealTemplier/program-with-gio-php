@@ -1,5 +1,6 @@
 <?php
 
+use App\Config;
 use App\Controllers\HomeController;
 use App\Controllers\InvoicesController;
 use App\Router;
@@ -29,14 +30,6 @@ $request = [
     'method' => $_SERVER['REQUEST_METHOD']
 ];
 
-$config = [
-    'db' => [
-        'driver' => $_ENV['DB_DRIVER'],
-        'host' => $_ENV['DB_HOST'],
-        'user' => $_ENV['DB_USER'],
-        'pass' => $_ENV['DB_PASS'],
-        'database' => $_ENV['DB_NAME'],
-    ]
-];
+$config = new Config($_ENV);
 
 return [$router, $request, $config];

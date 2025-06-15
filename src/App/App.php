@@ -13,9 +13,9 @@ class App
     public function __construct(
         protected Router $router,
         protected array  $request,
-        protected array  $config)
+        protected Config $config)
     {
-        static::$db = new DB($config);
+        static::$db = new DB($config->db ?? []);
     }
 
     public function run(): void

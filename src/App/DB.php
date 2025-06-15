@@ -15,9 +15,9 @@ class DB
     public function __construct(array $config)
     {
         try {
-            $dsn = "{$config['db']['driver']}:host={$config['db']['host']};dbname={$config['db']['database']}";
-            $user = $config['db']['user'];
-            $pass = $config['db']['pass'];
+            $dsn = "{$config['driver']}:host={$config['host']};dbname={$config['database']}";
+            $user = $config['user'];
+            $pass = $config['pass'];
             $options = [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false
