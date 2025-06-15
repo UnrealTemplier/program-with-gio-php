@@ -16,6 +16,7 @@ class HomeController
         try {
             $db = new PDO('mysql:host=mysql;dbname=my_db', 'root', 'root', [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false
             ]);
 
             $email = $_GET['email'];
