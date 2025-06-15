@@ -13,7 +13,12 @@ class HomeController
     public function index(): View
     {
         try {
-            $db = new PDO('mysql:host=mysql;dbname=my_db', 'root', 'root', [
+            $dsn = $_ENV['DB_DRIVER']
+                . ':host=' . $_ENV['DB_HOST']
+                . ';dbname=' . $_ENV['DB_NAME'];
+            $user = $_ENV['DB_USER'];
+            $pass = $_ENV['DB_PASS'];
+            $db = new PDO($dsn, $user, $pass, [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ]);
         } catch (PDOException $e) {
@@ -29,8 +34,8 @@ class HomeController
         try {
             $db->beginTransaction();
 
-            $email = 'j@doe.com';
-            $name = 'J Doe';
+            $email = 'blair@doe.com';
+            $name = 'Blair Doe';
             $isActive = 1;
             $createdAt = date('Y-m-d H:i:s', time());
             $updatedAt = date('Y-m-d H:i:s', time());
@@ -51,7 +56,7 @@ class HomeController
             $userId = $db->lastInsertId();
 
             $newInvoiceStmt->execute([$amount, $userId]);
-            
+
             $db->commit();
         } catch (\Throwable $e) {
             if ($db->inTransaction()) {
