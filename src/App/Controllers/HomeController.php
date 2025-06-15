@@ -15,30 +15,37 @@ class HomeController
     {
         try {
             $db = new PDO('mysql:host=mysql;dbname=my_db', 'root', 'root', [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             ]);
 
             $email = $_GET['email'];
-            $name = 'John Doe';
+            $name = $_GET['name'];
             $isActive = 1;
             $createdAt = date('Y-m-d H:i:s', strtotime('2025-05-15 11:38:00'));
             $query = 'insert into users (email, full_name, is_active, created_at) 
-                      values (?, ?, ?, ?)';
+                      values (:email, :name, :isActive, :createdAt)';
 
             print_line($query);
 
             $stmt = $db->prepare($query);
-            $stmt->execute([$email, $name, $isActive, $createdAt]);
+            $stmt->execute([
+                'email' => $email,
+                'name' => $name,
+                'isActive' => $isActive,
+                'createdAt' => $createdAt,
+            ]);
 
             $id = $db->lastInsertId();
 
             print_array($db->query('select * from users where id = ' . $id)->fetchAll());
         } catch (PDOException $e) {
-            print_line('PDOException: ' . $e->getMessage(),
+            print_line(
+                'PDOException: ' . $e->getMessage(),
                 'Error code: ' . $e->getCode(),
                 'In file: ' . $e->getFile(),
                 'At line: ' . $e->getLine(),
-                '');
+                '',
+            );
         }
 
         return View::make('index');
