@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 use JetBrains\PhpStorm\NoReturn;
 
-function d(mixed $object): void
+function d(...$objects): void
 {
     echo '<pre>';
-    var_dump($object);
+    var_dump(...$objects);
     echo '</pre>';
 }
 
 #[NoReturn]
-function dd(mixed $object): void
+function dd(...$objects): void
 {
     echo '<pre>';
-    var_dump($object);
+    var_dump(...$objects);
     echo '</pre>';
     die();
 }
@@ -27,9 +27,11 @@ function print_array(array $array): void
     echo '</pre>';
 }
 
-function print_line(mixed $value = ''): void
+function print_line(...$values): void
 {
-    echo $value . '<br />';
+    foreach ($values as $value) {
+        echo $value . '<br />';
+    }
 }
 
 
