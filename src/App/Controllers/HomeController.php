@@ -5,55 +5,28 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\App;
+use App\Models\Invoice;
+use App\Models\SignUp;
 use App\View;
 
 class HomeController
 {
+    /**
+     * @throws \Throwable
+     */
     public function index(): View
     {
-        $db = App::db();
+        $invoiceId = new SignUp()->register(
+            [
+                'email' => 'rob@halford.com',
+                'name' => 'Rob Halford'
+            ],
+            [
+                'amount' => 32
+            ]
+        );
 
-        try {
-            $db->beginTransaction();
-
-            $email = 'tom@doe.com';
-            $name = 'Tom Doe';
-            $isActive = 1;
-            $createdAt = date('Y-m-d H:i:s', time());
-            $updatedAt = date('Y-m-d H:i:s', time());
-
-            $amount = 25;
-
-            $newUserStmt = $db->prepare(
-                'insert into users (email, full_name, is_active, created_at, updated_at) 
-                 values (?, ?, ?, ?, ?)');
-
-            $newInvoiceStmt = $db->prepare(
-                'insert into invoices (amount, user_id)
-                 values (?, ?)'
-            );
-
-            $newUserStmt->execute([$email, $name, $isActive, $createdAt, $updatedAt]);
-
-            $userId = $db->lastInsertId();
-
-            $newInvoiceStmt->execute([$amount, $userId]);
-
-            $db->commit();
-        } catch (\Throwable $e) {
-            if ($db->inTransaction()) {
-                $db->rollBack();
-            }
-
-            throw $e;
-        }
-
-        $query = 'select * from users where id = ?';
-        $stmt = $db->prepare($query);
-        $stmt->execute([$userId]);
-        print_array($stmt->fetchAll());
-
-        return View::make('index');
+        return View::make('index', ['invoice' => new Invoice()->find($invoiceId)]);
     }
 
     public function upload(): void
