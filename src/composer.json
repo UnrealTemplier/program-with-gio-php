@@ -2,7 +2,8 @@
   "name": "ut/php-the-right-way",
   "type": "project",
   "require": {
-    "ramsey/uuid": "^4.7"
+    "ramsey/uuid": "^4.7",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {
