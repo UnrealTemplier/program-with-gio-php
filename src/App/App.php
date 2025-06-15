@@ -5,37 +5,17 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exceptions\RouteNotFoundException;
-use PDO;
-use PDOException;
 
 class App
 {
-    private static PDO $db;
+    private static DB $db;
 
     public function __construct(
         protected Router $router,
         protected array  $request,
         protected array  $config)
     {
-        try {
-            $dsn = "{$config['db']['driver']}:host={$config['db']['host']};dbname={$config['db']['database']}";
-            $user = $config['db']['user'];
-            $pass = $config['db']['pass'];
-            $options = [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES => false
-            ];
-
-            static::$db = new PDO($dsn, $user, $pass, $options);
-        } catch (PDOException $e) {
-            print_line(
-                'PDOException: ' . $e->getMessage(),
-                'Error code: ' . $e->getCode(),
-                'In file: ' . $e->getFile(),
-                'At line: ' . $e->getLine(),
-                '',
-            );
-        }
+        static::$db = new DB($config);
     }
 
     public function run(): void
@@ -52,7 +32,7 @@ class App
         }
     }
 
-    public static function db(): PDO
+    public static function db(): DB
     {
         return static::$db;
     }
