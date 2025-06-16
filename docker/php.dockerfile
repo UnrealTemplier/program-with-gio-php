@@ -1,4 +1,4 @@
-FROM php:8.4.5-fpm-alpine3.21
+FROM php:8.4.8-fpm
 
 #RUN addgroup -g ${PGID} ut && adduser -u ${PUID} -G ut -s /bin/sh -D ut
 
