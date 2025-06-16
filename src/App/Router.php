@@ -61,4 +61,9 @@ class Router
 
         return new RouteNotFoundException();
     }
+
+    public function getRoutes(): array
+    {
+        return $this->routes;
+    }
 }
