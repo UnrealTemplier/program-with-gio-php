@@ -1,6 +1,7 @@
 <?php
 
 use App\Config;
+use App\Container;
 use App\Controllers\HomeController;
 use App\Controllers\InvoicesController;
 use App\Router;
@@ -17,7 +18,7 @@ require_once __DIR__ . '/../helpers.php';
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-$router = new Router();
+$router = new Router(new Container());
 $router
     ->get('/', [HomeController::class, 'index'])
     ->post('/upload', [HomeController::class, 'upload'])

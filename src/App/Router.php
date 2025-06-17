@@ -10,6 +10,8 @@ class Router
 {
     public array $routes = [];
 
+    public function __construct(private Container $container) {}
+
     protected function register(
         string $requestMethod,
         string $route,
@@ -50,7 +52,7 @@ class Router
         [$class, $method] = $action;
 
         if (class_exists($class)) {
-            $instance = new $class();
+            $instance = $this->container->get($class);
 
             if (method_exists($instance, $method)) {
                 return call_user_func_array([$instance, $method], []);
