@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\App;
-use App\Models\Invoice;
-use App\Models\SignUp;
+use App\Services\InvoiceService;
 use App\View;
 
 class HomeController
@@ -16,17 +15,9 @@ class HomeController
      */
     public function index(): View
     {
-        $invoiceId = new SignUp()->register(
-            [
-                'email' => 'rob@halford.com',
-                'name' => 'Rob Halford'
-            ],
-            [
-                'amount' => 32
-            ]
-        );
+        App::$container->get(InvoiceService::class)->process([], 25);
 
-        return View::make('index', ['invoice' => new Invoice()->find($invoiceId)]);
+        return View::make('index');
     }
 
     public function upload(): void
