@@ -22,11 +22,11 @@ class RouterTest extends TestCase
         // then we assert route was registered
         $expected = [
             'get' => [
-                '/users' => ['Users', 'index']
+                '/users' => ['Users', 'index'],
             ],
         ];
 
-        $this->assertEquals($expected, $router->getRoutes());
+        $this->assertEquals($expected, $router->routes);
     }
 
     #[Test]
@@ -41,11 +41,11 @@ class RouterTest extends TestCase
         // then we assert route was registered
         $expected = [
             'post' => [
-                '/users' => ['Users', 'store']
+                '/users' => ['Users', 'store'],
             ],
         ];
 
-        $this->assertEquals($expected, $router->getRoutes());
+        $this->assertEquals($expected, $router->routes);
     }
 
     #[Test]
@@ -61,13 +61,21 @@ class RouterTest extends TestCase
         // then we assert route was registered
         $expected = [
             'get' => [
-                '/users' => ['Users', 'index']
+                '/users' => ['Users', 'index'],
             ],
             'post' => [
-                '/users' => ['Users', 'store']
+                '/users' => ['Users', 'store'],
             ],
         ];
 
-        $this->assertEquals($expected, $router->getRoutes());
+        $this->assertEquals($expected, $router->routes);
+    }
+
+    #[Test]
+    public function there_are_no_routes_when_router_created(): void
+    {
+        $router = new Router();
+
+        $this->assertEmpty($router->routes);
     }
 }
