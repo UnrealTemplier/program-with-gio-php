@@ -11,14 +11,52 @@ use PHPUnit\Framework\TestCase;
 class RouterTest extends TestCase
 {
     #[Test]
-    public function it_registers_a_route(): void
+    public function it_registers_a_get_route(): void
     {
         // given that we have a Router object
         $router = new Router();
 
         // when we call a register method
         $router->get('/users', ['Users', 'index']);
-        $router->post('/users', ['Users', 'index']);
+
+        // then we assert route was registered
+        $expected = [
+            'get' => [
+                '/users' => ['Users', 'index']
+            ],
+        ];
+
+        $this->assertEquals($expected, $router->getRoutes());
+    }
+
+    #[Test]
+    public function it_registers_a_post_route(): void
+    {
+        // given that we have a Router object
+        $router = new Router();
+
+        // when we call a register method
+        $router->post('/users', ['Users', 'store']);
+
+        // then we assert route was registered
+        $expected = [
+            'post' => [
+                '/users' => ['Users', 'store']
+            ],
+        ];
+
+        $this->assertEquals($expected, $router->getRoutes());
+    }
+
+    #[Test]
+    public function it_registers_multiple_routes(): void
+    {
+        // given that we have a Router object
+        $router = new Router();
+
+        // when we call a register method
+        $router->get('/users', ['Users', 'index']);
+        $router->post('/users', ['Users', 'store']);
 
         // then we assert route was registered
         $expected = [
@@ -26,7 +64,7 @@ class RouterTest extends TestCase
                 '/users' => ['Users', 'index']
             ],
             'post' => [
-                '/users' => ['Users', 'index']
+                '/users' => ['Users', 'store']
             ],
         ];
 
