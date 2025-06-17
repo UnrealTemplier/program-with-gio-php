@@ -6,9 +6,10 @@ namespace tests\Unit;
 
 use App\Exceptions\RouteNotFoundException;
 use App\Router;
-use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use tests\DataProviders\RouterDataProvider;
 
 final class RouterTest extends TestCase
 {
@@ -80,7 +81,7 @@ final class RouterTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('routeNotFoundCases')]
+    #[DataProviderExternal(RouterDataProvider::class, 'routeNotFoundCases')]
     public function it_throws_route_not_found_exception(
         string $requestUri,
         string $requestMethod
@@ -98,16 +99,5 @@ final class RouterTest extends TestCase
 
         $this->expectException(RouteNotFoundException::class);
         $this->router->resolve($requestUri, $requestMethod);
-    }
-
-
-    public static function routeNotFoundCases(): array
-    {
-        return [
-            ['/users', 'put'],
-            ['/invoices', 'post'],
-            ['/users', 'get'],
-            ['/users', 'post'],
-        ];
     }
 }
