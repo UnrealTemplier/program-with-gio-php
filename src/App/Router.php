@@ -8,7 +8,11 @@ use App\Exceptions\RouteNotFoundException;
 
 class Router
 {
-    protected array $routes = [];
+    public array $routes = [] {
+        get {
+            return $this->routes;
+        }
+    }
 
     protected function register(
         string $requestMethod,
@@ -60,10 +64,5 @@ class Router
         }
 
         return new RouteNotFoundException();
-    }
-
-    public function getRoutes(): array
-    {
-        return $this->routes;
     }
 }
