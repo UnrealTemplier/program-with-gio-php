@@ -100,4 +100,33 @@ final class RouterTest extends TestCase
         $this->expectException(RouteNotFoundException::class);
         $this->router->resolve($requestUri, $requestMethod);
     }
+
+    #[Test]
+    public function it_resolves_route_from_closure(): void
+    {
+        $this->router->get('/users', fn() => [1, 2, 3]);
+
+        $this->assertEquals(
+            [1, 2, 3],
+            $this->router->resolve('/users', 'get')
+        );
+    }
+
+    #[Test]
+    public function it_resolves_route(): void
+    {
+        $users = new class() {
+            public function index(): array
+            {
+                return [1, 2, 3];
+            }
+        };
+
+        $this->router->get('/users', [$users::class, 'index']);
+
+        $this->assertEquals(
+            [1, 2, 3],
+            $this->router->resolve('/users', 'get')
+        );
+    }
 }
