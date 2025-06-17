@@ -35,7 +35,7 @@ final class RouterTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expected, $this->router->getRoutes());
+        $this->assertSame($expected, $this->router->getRoutes());
     }
 
     #[Test]
@@ -51,7 +51,7 @@ final class RouterTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expected, $this->router->getRoutes());
+        $this->assertSame($expected, $this->router->getRoutes());
     }
 
     #[Test]
@@ -71,7 +71,7 @@ final class RouterTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expected, $this->router->getRoutes());
+        $this->assertSame($expected, $this->router->getRoutes());
     }
 
     #[Test]
@@ -106,7 +106,7 @@ final class RouterTest extends TestCase
     {
         $this->router->get('/users', fn() => [1, 2, 3]);
 
-        $this->assertEquals(
+        $this->assertSame(
             [1, 2, 3],
             $this->router->resolve('/users', 'get')
         );
@@ -124,7 +124,7 @@ final class RouterTest extends TestCase
 
         $this->router->get('/users', [$users::class, 'index']);
 
-        $this->assertEquals(
+        $this->assertSame(
             [1, 2, 3],
             $this->router->resolve('/users', 'get')
         );
