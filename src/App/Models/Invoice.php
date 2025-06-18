@@ -12,12 +12,12 @@ class Invoice extends Model
     {
         $stmt = $this->db->prepare(
             'insert into invoices (amount, user_id)
-             values (?, ?)'
+             values (?, ?)',
         );
 
         $stmt->execute([$amount, $userId]);
 
-        return (int) $this->db->lastInsertId();
+        return (int)$this->db->lastInsertId();
     }
 
     public function find(int $id): mixed
@@ -27,11 +27,22 @@ class Invoice extends Model
              from invoices 
              inner join users 
              on users.id = invoices.user_id 
-             where invoices.id = ?'
+             where invoices.id = ?',
         );
 
         $stmt->execute([$id]);
 
         return $stmt->fetch();
+    }
+
+    public function all(): \Generator
+    {
+        $stmt = $this->db->query(
+            'select *
+            from invoices
+            cross join users',
+        );
+
+        return $this->fetchLazy($stmt);
     }
 }

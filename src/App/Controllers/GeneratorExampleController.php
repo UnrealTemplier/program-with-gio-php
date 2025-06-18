@@ -2,23 +2,19 @@
 
 namespace App\Controllers;
 
+use App\Models\Invoice;
 use Generator;
 
 class GeneratorExampleController
 {
+    public function __construct(private Invoice $invoiceModel) {}
+
     public function index(): void
     {
-        $range = $this->lazyRange(1, 10_000_000);
+        $all = $this->invoiceModel->all();
 
-        foreach ($range as $i) {
-            print_line($i);
-        }
-    }
-
-    private function lazyRange(int $start, int $end): Generator
-    {
-        for ($i = $start; $i <= $end; $i++) {
-            yield $i;
+        foreach ($all as $item) {
+            print_array($item);
         }
     }
 }
