@@ -2,6 +2,7 @@
 
 use App\Config;
 use App\Container;
+use App\Controllers\GeneratorExampleController;
 use App\Controllers\HomeController;
 use App\Controllers\InvoicesController;
 use App\Router;
@@ -23,6 +24,7 @@ $container = new Container();
 $router = new Router($container);
 $router
     ->get('/', [HomeController::class, 'index'])
+    ->get('/generator/example', [GeneratorExampleController::class, 'index'])
     ->post('/upload', [HomeController::class, 'upload'])
     ->get('/invoices', [InvoicesController::class, 'index'])
     ->get('/invoices/create', [InvoicesController::class, 'create'])
