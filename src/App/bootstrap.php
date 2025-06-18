@@ -18,7 +18,9 @@ require_once __DIR__ . '/../helpers.php';
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-$router = new Router(new Container());
+$container = new Container();
+
+$router = new Router($container);
 $router
     ->get('/', [HomeController::class, 'index'])
     ->post('/upload', [HomeController::class, 'upload'])
@@ -33,4 +35,4 @@ $request = [
 
 $config = new Config($_ENV);
 
-return [$router, $request, $config];
+return [$container, $router, $request, $config];
