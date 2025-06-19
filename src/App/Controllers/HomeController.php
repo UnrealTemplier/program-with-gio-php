@@ -6,14 +6,18 @@ namespace App\Controllers;
 
 use App\Services\InvoiceService;
 use App\View;
+use App\Attributes\Get;
+use App\Attributes\Post;
+use Throwable;
 
-class HomeController
+readonly class HomeController
 {
     public function __construct(private InvoiceService $invoiceService) {}
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
+    #[Get('/')]
     public function index(): View
     {
         $this->invoiceService->process([], 25);
@@ -21,7 +25,8 @@ class HomeController
         return View::make('index');
     }
 
-    public function upload(): void
+    #[Post('/upload')]
+    public function upload(): never
     {
         $fileData = $_FILES['receipt'];
         $filePath = STORAGE_PATH . '/' . $fileData['name'];

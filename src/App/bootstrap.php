@@ -22,13 +22,14 @@ $dotenv->load();
 $container = new Container();
 
 $router = new Router($container);
-$router
-    ->get('/', [HomeController::class, 'index'])
-    ->get('/generator/example', [GeneratorExampleController::class, 'index'])
-    ->post('/upload', [HomeController::class, 'upload'])
-    ->get('/invoices', [InvoicesController::class, 'index'])
-    ->get('/invoices/create', [InvoicesController::class, 'create'])
-    ->post('/invoices/create', [InvoicesController::class, 'store']);
+
+$router->registerRoutesFromControllerAttributes(
+    [
+        HomeController::class,
+        InvoicesController::class,
+        GeneratorExampleController::class
+    ]
+);
 
 $request = [
     'uri' => $_SERVER['REQUEST_URI'],

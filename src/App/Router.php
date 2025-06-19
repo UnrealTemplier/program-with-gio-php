@@ -8,12 +8,14 @@ use App\Exceptions\RouteNotFoundException;
 use http\Exception\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use ReflectionClass;
+use ReflectionException;
 
 class Router
 {
-    public array $routes = [];
+    protected array $routes = [];
 
-    public function __construct(private Container $container) {}
+    public function __construct(private readonly Container $container) {}
 
     protected function register(
         RequestMethod $requestMethod,
@@ -22,16 +24,6 @@ class Router
     ): self {
         $this->routes[$requestMethod->value][$route] = $action;
         return $this;
-    }
-
-    public function get(string $route, callable|array $action): self
-    {
-        return $this->register(RequestMethod::GET, $route, $action);
-    }
-
-    public function post(string $route, callable|array $action): self
-    {
-        return $this->register(RequestMethod::POST, $route, $action);
     }
 
     /**
@@ -77,5 +69,25 @@ class Router
     public function getRoutes(): array
     {
         return $this->routes;
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function registerRoutesFromControllerAttributes(array $controllers): void
+    {
+        foreach ($controllers as $controller) {
+            $reflectionController = new ReflectionClass($controller);
+
+            foreach ($reflectionController->getMethods() as $method) {
+                $attributes = $method->getAttributes();
+
+                foreach ($attributes as $attribute) {
+                    $route = $attribute->newInstance();
+
+                    $this->register($route->method, $route->path, [$controller, $method->getName()]);
+                }
+            }
+        }
     }
 }

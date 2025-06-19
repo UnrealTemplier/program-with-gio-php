@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use JetBrains\PhpStorm\NoReturn;
-
 function d(...$objects): void
 {
     echo '<pre>';
@@ -11,8 +9,7 @@ function d(...$objects): void
     echo '</pre>';
 }
 
-#[NoReturn]
-function dd(...$objects): void
+function dd(...$objects): never
 {
     echo '<pre>';
     var_dump(...$objects);
