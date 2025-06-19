@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exceptions\RouteNotFoundException;
+use http\Exception\InvalidArgumentException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class Router
 {
@@ -13,33 +16,42 @@ class Router
     public function __construct(private Container $container) {}
 
     protected function register(
-        string $requestMethod,
+        RequestMethod $requestMethod,
         string $route,
         callable|array $action,
     ): self {
-        $this->routes[$requestMethod][$route] = $action;
+        $this->routes[$requestMethod->value][$route] = $action;
         return $this;
     }
 
     public function get(string $route, callable|array $action): self
     {
-        return $this->register('get', $route, $action);
+        return $this->register(RequestMethod::GET, $route, $action);
     }
 
     public function post(string $route, callable|array $action): self
     {
-        return $this->register('post', $route, $action);
+        return $this->register(RequestMethod::POST, $route, $action);
     }
 
     /**
      * @throws RouteNotFoundException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function resolve(string $requestUri, string $requestMethod): mixed
     {
         $route = explode('?', $requestUri)[0];
-        $requestMethod = strtolower($requestMethod);
+        $requestMethod = strtoupper($requestMethod);
+        $requestMethodEnum = RequestMethod::tryFrom($requestMethod);
 
-        $action = $this->routes[$requestMethod][$route] ?? null;
+        if ($requestMethodEnum === null) {
+            throw new InvalidArgumentException(
+                'Unsupported HTTP method: ' . $requestMethod,
+            );
+        }
+
+        $action = $this->routes[$requestMethodEnum->value][$route] ?? null;
 
         if (!$action) {
             throw new RouteNotFoundException();
