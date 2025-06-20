@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace tests\Unit;
+
 use App\Container;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
