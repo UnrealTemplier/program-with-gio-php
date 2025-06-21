@@ -20,8 +20,6 @@ readonly class HomeController
     #[Get('/')]
     public function index(): View
     {
-        $this->invoiceService->process([], 25);
-
         return View::make('index');
     }
 
