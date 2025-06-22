@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Enums\RequestMethod;
 use App\Exceptions\RouteNotFoundException;
 use http\Exception\InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;

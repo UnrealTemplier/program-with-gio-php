@@ -2,7 +2,7 @@
 
 namespace App\Attributes;
 
-use App\RequestMethod;
+use App\Enums\RequestMethod;
 
 #[\Attribute(\Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class Get extends Route

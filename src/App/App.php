@@ -7,22 +7,40 @@ namespace App;
 use App\Exceptions\RouteNotFoundException;
 use App\Services\PaymentGatewayService;
 use App\Services\PaymentGatewayServiceInterface;
+use Dotenv\Dotenv;
 use Symfony\Component\Mailer\MailerInterface;
 
 class App
 {
-    private static DB $db;
+    protected static DB $db;
+    protected Config $config;
 
     public function __construct(
         protected Container $container,
-        protected Router $router,
-        protected array $request,
-        protected Config $config,
-    ) {
-        static::$db = new DB($config->db ?? []);
+        protected ?Router $router = null,
+        protected array $request = [],
+    ) {}
 
-        $this->container->set(PaymentGatewayServiceInterface::class, PaymentGatewayService::class);
-        $this->container->set(MailerInterface::class, fn() => new CustomMailer($this->config->mailer['dsn']));
+    public function boot(): static
+    {
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__));
+        $dotenv->load();
+
+        $this->config = new Config($_ENV);
+
+        static::$db = new DB($this->config->db ?? []);
+
+        $this->container->set(
+            PaymentGatewayServiceInterface::class,
+            PaymentGatewayService::class,
+        );
+
+        $this->container->set(
+            MailerInterface::class,
+            fn() => new CustomMailer($this->config->mailer['dsn']),
+        );
+
+        return $this;
     }
 
     public function run(): void
@@ -37,6 +55,11 @@ class App
 
             echo View::make('errors/404');
         }
+    }
+
+    public function getContainer(): Container
+    {
+        return $this->container;
     }
 
     public static function db(): DB

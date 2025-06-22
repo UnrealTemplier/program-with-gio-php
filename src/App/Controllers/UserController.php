@@ -6,14 +6,12 @@ namespace App\Controllers;
 
 use App\Attributes\Get;
 use App\Attributes\Post;
+use App\Models\Email;
 use App\View;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
 
 class UserController
 {
-    public function __construct(protected MailerInterface $mailer) {}
-
     #[Get('/users/create')]
     public function create(): View
     {
@@ -30,14 +28,12 @@ class UserController
         $text = (string)View::make('mail/plainText', ['firstName' => $firstName]);
         $html = (string)View::make('mail/htmlText', ['firstName' => $firstName]);
 
-        $email = new Email()
-            ->from('support@supernatural.com')
-            ->to($email)
-            ->subject('Welcome!')
-            ->text($text)
-            ->html($html)
-            ->attach('Hello Attachment!', 'welcome.txt');
-
-        $this->mailer->send($email);
+        new Email()->queue(
+            new Address($email),
+            new Address('support@supernatural.com', 'Support'),
+            'Welcome',
+            $html,
+            $text,
+        );
     }
 }
