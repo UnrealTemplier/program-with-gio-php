@@ -32,3 +32,4 @@ auth.json
 mysql
 /src/vendor/
 /src/storage/
+docker/log/cron/cron.log
