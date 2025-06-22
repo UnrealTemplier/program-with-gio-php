@@ -5,6 +5,7 @@ use App\Container;
 use App\Controllers\GeneratorExampleController;
 use App\Controllers\HomeController;
 use App\Controllers\InvoicesController;
+use App\Controllers\UserController;
 use App\Router;
 use Dotenv\Dotenv;
 
@@ -26,6 +27,7 @@ $router = new Router($container);
 $router->registerRoutesFromControllerAttributes(
     [
         HomeController::class,
+        UserController::class,
         InvoicesController::class,
         GeneratorExampleController::class
     ]

@@ -31,4 +31,11 @@ function print_line(...$values): void
     }
 }
 
+function print_formatted(...$values): void
+{
+    echo '<pre>';
+    print_line(...$values);
+    echo '</pre>';
+}
+
 
