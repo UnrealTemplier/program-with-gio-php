@@ -20,13 +20,6 @@ $connectionParams = [
 
 $conn = DriverManager::getConnection($connectionParams);
 
-$builder = $conn->createQueryBuilder();
-$usersBuilder = $builder
-    ->select('*')
-    ->from('users')
-    ->where('id IN (?)')
-    ->setParameter(0, [1, 3, 5, 7], ArrayParameterType::INTEGER);
-
-print_line($usersBuilder->getSQL());
-
-print_array($usersBuilder->fetchAllAssociative());
+$schemaManager = $conn->createSchemaManager();
+$columns = array_keys($schemaManager->listTableColumns('users'));
+print_array($columns);
