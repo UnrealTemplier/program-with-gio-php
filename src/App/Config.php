@@ -16,11 +16,11 @@ class Config
     {
         $this->config = [
             'db' => [
-                'driver' => $env['DB_DRIVER'],
+                'driver' => $env['DB_DRIVER'] ?? 'pdo_mysql',
                 'host' => $env['DB_HOST'],
                 'user' => $env['DB_USER'],
-                'pass' => $env['DB_PASS'],
-                'database' => $env['DB_NAME'],
+                'password' => $env['DB_PASS'],
+                'dbname' => $env['DB_NAME'],
             ],
             'mailer' => [
                 'dsn' => $env['MAILER_DSN'] ?? '',

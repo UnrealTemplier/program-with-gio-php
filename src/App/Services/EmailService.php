@@ -21,19 +21,19 @@ class EmailService
 
         foreach ($emails as $email) {
             try {
-                $meta = json_decode($email->meta, true);
+                $meta = json_decode($email['meta'], true);
                 $emailMessage = new Email()
                     ->from($meta['from'])
                     ->to($meta['to'])
-                    ->subject($email->subject)
-                    ->text($email->text_body)
-                    ->html($email->html_body);
+                    ->subject($email['subject'])
+                    ->text($email['text_body'])
+                    ->html($email['html_body']);
                 $this->mailer->send($emailMessage);
             } catch (\Throwable) {
-                $this->emailModel->markEmailFailed($email->id);
+                $this->emailModel->markEmailFailed($email['id']);
             }
 
-            $this->emailModel->markEmailSent($email->id);
+            $this->emailModel->markEmailSent($email['id']);
         }
     }
 }

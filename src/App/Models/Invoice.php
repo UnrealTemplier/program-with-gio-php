@@ -10,39 +10,45 @@ class Invoice extends Model
 {
     public function create(float $amount, int $userId)
     {
-        $stmt = $this->db->prepare(
-            'insert into invoices (amount, user_id)
-             values (?, ?)',
-        );
-
-        $stmt->execute([$amount, $userId]);
+        $this->db
+            ->createQueryBuilder()
+            ->insert('invoices')
+            ->values(
+                [
+                    'amount' => '?',
+                    'user_id' => '?',
+                ],
+            )
+            ->setParameter(0, $amount)
+            ->setParameter(1, $userId)
+            ->executeStatement();
 
         return (int)$this->db->lastInsertId();
     }
 
     public function find(int $id): mixed
     {
-        $stmt = $this->db->prepare(
-            'select invoices.id, amount, full_name 
-             from invoices 
-             inner join users 
-             on users.id = invoices.user_id 
-             where invoices.id = ?',
-        );
-
-        $stmt->execute([$id]);
-
-        return $stmt->fetch();
+        return $this->db
+            ->createQueryBuilder()
+            ->select('invoices.id', 'amount', 'full_name')
+            ->from('invoices', 'i')
+            ->join('i', 'users', 'u', 'u.id = i.user_id')
+            ->where('i.id = ?')
+            ->setParameter(0, $id)
+            ->executeQuery()
+            ->fetchOne();
     }
 
     public function all(): \Generator
     {
-        $stmt = $this->db->query(
-            'select *
-            from invoices
-            cross join users',
-        );
+        $items = $this->db
+            ->createQueryBuilder()
+            ->select('*')
+            ->from('invoices', 'i')
+            ->join('i', 'users', 'u')
+            ->executeQuery()
+            ->iterateAssociative();
 
-        return $this->fetchLazy($stmt);
+        return $this->fetchLazy($items);
     }
 }

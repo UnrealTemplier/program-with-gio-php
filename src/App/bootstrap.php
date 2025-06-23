@@ -1,7 +1,6 @@
 <?php
 
 use App\App;
-use App\Config;
 use App\Container;
 use App\Controllers\GeneratorExampleController;
 use App\Controllers\HomeController;

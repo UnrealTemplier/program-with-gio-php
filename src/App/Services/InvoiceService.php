@@ -20,7 +20,7 @@ class InvoiceService
             return false;
         }
 
-        $this->emailService->send($customer, 'receipt');
+        //$this->emailService->send($customer, 'receipt');
 
         print_line('Invoice has been processed');
 
