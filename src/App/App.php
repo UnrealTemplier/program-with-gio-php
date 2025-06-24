@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exceptions\RouteNotFoundException;
-use App\Services\PaymentGatewayService;
-use App\Services\PaymentGatewayServiceInterface;
 use Dotenv\Dotenv;
 use Symfony\Component\Mailer\MailerInterface;
 
@@ -29,11 +27,6 @@ class App
         $this->config = new Config($_ENV);
 
         static::$db = new DB($this->config->db ?? []);
-
-        $this->container->set(
-            PaymentGatewayServiceInterface::class,
-            PaymentGatewayService::class,
-        );
 
         $this->container->set(
             MailerInterface::class,

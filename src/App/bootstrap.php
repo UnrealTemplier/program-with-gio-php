@@ -22,9 +22,6 @@ $router = new Router($container);
 $router->registerRoutesFromControllerAttributes(
     [
         HomeController::class,
-        UserController::class,
-        InvoicesController::class,
-        GeneratorExampleController::class,
     ],
 );
 
