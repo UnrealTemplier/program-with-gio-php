@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use App\App;
 use App\Entity\Invoice;
-use App\Entity\InvoiceItem;
-use App\Enums\InvoiceStatus;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
@@ -30,35 +28,24 @@ $connectionParams = [
 $connection = DriverManager::getConnection($connectionParams, $config);
 $entityManager = new EntityManager($connection, $config);
 
-$items = [
-    ['Item 1', 1, 15],
-    ['Item 2', 2, 7.5],
-    ['Item 3', 4, 3.75],
-];
+$queryBuilder = $entityManager->createQueryBuilder();
 
-//$invoice = new Invoice()
-//    ->setAmount(45)
-//    ->setInvoiceNumber('1')
-//    ->setStatus(InvoiceStatus::Pending)
-//    ->setCreatedAt(new DateTime());
-//
-//foreach ($items as [$description, $quantity, $unitPrice]) {
-//    $item = new InvoiceItem()
-//        ->setDescription($description)
-//        ->setQuantity($quantity)
-//        ->setUnitPrice($unitPrice);
-//
-//    $invoice->addItem($item);
+$query = $queryBuilder
+    ->select('i')
+    ->from(Invoice::class, 'i')
+    ->where('i.amount > :amount')
+    ->setParameter('amount', 40)
+    ->orderBy('i.createdAt', 'desc')
+    ->getQuery();
+
+$invoices = $query->getArrayResult();
+print_array($invoices);
+
+//$invoices = $query->getResult();
+
+///** @var Invoice $invoice */
+//foreach ($invoices as $invoice) {
+//    echo ' - ' . $invoice->getCreatedAt()->format('d.m.Y G:i')
+//        . ', ' . $invoice->getAmount()
+//        . ', ' . $invoice->getStatus()->name . PHP_EOL;
 //}
-//
-//$entityManager->persist($invoice);
-//$entityManager->flush();
-//
-//$entityManager->remove($invoice);
-//$entityManager->flush();
-
-$invoice = $entityManager->find(Invoice::class, 25);
-$invoice->setStatus(InvoiceStatus::Paid);
-$invoice->getItems()->get(0)->setDescription('Foo Bar');
-
-$entityManager->flush();
