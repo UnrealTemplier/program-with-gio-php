@@ -2,10 +2,7 @@
 
 use App\App;
 use App\Container;
-use App\Controllers\GeneratorExampleController;
 use App\Controllers\HomeController;
-use App\Controllers\InvoicesController;
-use App\Controllers\UserController;
 use App\Router;
 
 const STORAGE_PATH = __DIR__ . '/../storage';
