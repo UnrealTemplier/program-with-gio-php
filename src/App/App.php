@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exceptions\RouteNotFoundException;
+use App\Services\Emailable\EmailValidationService;
 use Dotenv\Dotenv;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Events\Dispatcher;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 
 class App
 {
@@ -24,6 +28,25 @@ class App
         protected array $request = [],
     ) {}
 
+    /**
+     * @throws ReflectionException
+     */
+    public function boot(): static
+    {
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__));
+        $dotenv->load();
+
+        $this->config = new Config($_ENV);
+        $this->initDb($this->config->db);
+
+        $this->container->bind(
+            EmailValidationService::class,
+            fn() => new EmailValidationService($this->config->apiKeys['emailable']),
+        );
+
+        return $this;
+    }
+
     protected function initDb(array $config): void
     {
         $capsule = new Capsule();
@@ -33,17 +56,10 @@ class App
         $capsule->bootEloquent();
     }
 
-    public function boot(): static
-    {
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__));
-        $dotenv->load();
-
-        $this->config = new Config($_ENV);
-        $this->initDb($this->config->db);
-
-        return $this;
-    }
-
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function run(): void
     {
         try {

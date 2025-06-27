@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\App;
-use App\Container;
+use Illuminate\Container\Container;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../helpers.php';
