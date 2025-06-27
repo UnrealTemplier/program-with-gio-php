@@ -1,9 +1,10 @@
 <?php
 
 use App\App;
-use App\Container;
 use App\Controllers\HomeController;
+use App\Controllers\InvoiceController;
 use App\Router;
+use Illuminate\Container\Container;
 
 const STORAGE_PATH = __DIR__ . '/../storage';
 const VIEWS_PATH = __DIR__ . '/../views';
@@ -19,6 +20,7 @@ $router = new Router($container);
 $router->registerRoutesFromControllerAttributes(
     [
         HomeController::class,
+        InvoiceController::class,
     ],
 );
 

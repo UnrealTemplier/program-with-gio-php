@@ -6,18 +6,32 @@ namespace App;
 
 use App\Exceptions\RouteNotFoundException;
 use Dotenv\Dotenv;
-use Symfony\Component\Mailer\MailerInterface;
+use Illuminate\Container\Container;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Events\Dispatcher;
 
 class App
 {
-    protected static DB $db;
     protected Config $config;
 
     public function __construct(
-        protected Container $container,
+        protected(set) Container $container {
+            get {
+                return $this->container;
+            }
+        },
         protected ?Router $router = null,
         protected array $request = [],
     ) {}
+
+    protected function initDb(array $config): void
+    {
+        $capsule = new Capsule();
+        $capsule->addConnection($config);
+        $capsule->setEventDispatcher(new Dispatcher());
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+    }
 
     public function boot(): static
     {
@@ -25,13 +39,7 @@ class App
         $dotenv->load();
 
         $this->config = new Config($_ENV);
-
-        static::$db = new DB($this->config->db ?? []);
-
-        $this->container->set(
-            MailerInterface::class,
-            fn() => new CustomMailer($this->config->mailer['dsn']),
-        );
+        $this->initDb($this->config->db);
 
         return $this;
     }
@@ -48,15 +56,5 @@ class App
 
             echo View::make('errors/404');
         }
-    }
-
-    public function getContainer(): Container
-    {
-        return $this->container;
-    }
-
-    public static function db(): DB
-    {
-        return static::$db;
     }
 }

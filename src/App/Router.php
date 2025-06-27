@@ -6,7 +6,8 @@ namespace App;
 
 use App\Enums\RequestMethod;
 use App\Exceptions\RouteNotFoundException;
-use http\Exception\InvalidArgumentException;
+use Illuminate\Container\Container;
+use InvalidArgumentException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionClass;
@@ -67,11 +68,6 @@ class Router
         throw new RouteNotFoundException();
     }
 
-    public function getRoutes(): array
-    {
-        return $this->routes;
-    }
-
     /**
      * @throws ReflectionException
      */
@@ -90,5 +86,10 @@ class Router
                 }
             }
         }
+    }
+
+    public function getRoutes(): array
+    {
+        return $this->routes;
     }
 }
