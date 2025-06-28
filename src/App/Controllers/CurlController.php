@@ -3,11 +3,11 @@
 namespace App\Controllers;
 
 use App\Attributes\Get;
-use App\Services\Emailable\EmailValidationService;
+use App\Contracts\EmailValidationInterface;
 
 readonly class CurlController
 {
-    public function __construct(protected EmailValidationService $emailValidationService) {}
+    public function __construct(protected EmailValidationInterface $emailValidationService) {}
 
     #[Get('/curl')]
     public function index(): void

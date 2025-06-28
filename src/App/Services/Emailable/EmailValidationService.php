@@ -2,6 +2,7 @@
 
 namespace App\Services\Emailable;
 
+use App\Contracts\EmailValidationInterface;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
@@ -11,7 +12,7 @@ use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class EmailValidationService
+class EmailValidationService implements EmailValidationInterface
 {
     private string $baseUrl = 'https://api.emailable.com/v1/';
 
@@ -39,7 +40,8 @@ class EmailValidationService
         try {
             $response = $client->get('verify', ['query' => $apiQueryParams]);
             return json_decode($response->getBody()->getContents(), true);
-        } catch (GuzzleException $e) {
+        }
+        catch (GuzzleException $e) {
             echo 'Client error, code: ' . $e->getCode()
                 . ', in file: ' . $e->getFile()
                 . ', at line: ' . $e->getLine() . PHP_EOL;
