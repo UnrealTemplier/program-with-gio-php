@@ -15,6 +15,6 @@ readonly class CurlController
         $email = 'jaimore.evseev@gmail.com';
         $result = $this->emailValidationService->verify($email);
 
-        print_array($result);
+        print_line($result->score, $result->isDeliverable);
     }
 }
