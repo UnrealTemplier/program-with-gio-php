@@ -3,7 +3,7 @@
 namespace App\Services\Emailable;
 
 use App\Contracts\EmailValidationInterface;
-use App\Dto\EmailValidationResult;
+use App\Services\EmailValidationResult;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
@@ -43,8 +43,8 @@ class EmailValidationService implements EmailValidationInterface
             $result = json_decode($response->getBody()->getContents(), true);
 
             return new EmailValidationResult(
-                $result['score'],
-                $result['state'] === 'deliverable',
+                $result['score'] ?? 0,
+                $result['state'] === 'deliverable' ?? false,
             );
         }
         catch (GuzzleException $e) {

@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use App\Dto\EmailValidationResult;
+use App\Services\EmailValidationResult;
 
 interface EmailValidationInterface
 {
