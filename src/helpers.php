@@ -27,7 +27,7 @@ function print_array(array $array): void
 function print_line(...$values): void
 {
     foreach ($values as $value) {
-        echo $value . '<br />';
+        echo $value . PHP_EOL;
     }
 }
 
