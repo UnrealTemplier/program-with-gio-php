@@ -6,7 +6,7 @@ namespace App;
 
 use App\Contracts\EmailValidationInterface;
 use App\Exceptions\RouteNotFoundException;
-use App\Services\Emailable\EmailValidationService;
+use App\Services\EmailValidation\Emailable\EmailValidationService;
 use Dotenv\Dotenv;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as Capsule;

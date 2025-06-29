@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Emailable;
+namespace App\Services\EmailValidation\Emailable;
 
 use App\Contracts\EmailValidationInterface;
-use App\Services\EmailValidationResult;
+use App\Services\EmailValidation\EmailValidationResult;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
