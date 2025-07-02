@@ -10,9 +10,10 @@ use App\Router;
 use Illuminate\Container\Container;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../helpers.php';
 
-define('STORAGE_PATH', __DIR__ . '/../storage');
-define('VIEW_PATH', __DIR__ . '/../views');
+const STORAGE_PATH = __DIR__ . '/../storage';
+const VIEW_PATH = __DIR__ . '/../views';
 
 $container = new Container();
 $router    = new Router($container);
