@@ -1,19 +1,17 @@
 name: gio
 services:
   app:
-    container_name: php
     build:
       context: ""
       dockerfile: Dockerfile
+    container_name: app
     restart: always
-    extra_hosts:
-      - host.docker.internal:host-gateway
     working_dir: /var/www/
     volumes:
       - ../:/var/www
   nginx:
-    container_name: nginx
     image: nginx:1.19-alpine
+    container_name: nginx
     restart: always
     ports:
       - "80:80"
@@ -30,18 +28,3 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
-  mailhog:
-    container_name: mailhog
-    image: mailhog/mailhog
-    restart: always
-    logging:
-      driver: "none"
-    ports:
-      - "8025:8025"
-      - "1025:1025"
-  cron:
-    container_name: cron
-    build: ./cron
-    volumes:
-      - ../:/var/www
-      - ./log/cron:/var/log/cron

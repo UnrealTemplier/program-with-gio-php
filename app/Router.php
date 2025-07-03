@@ -12,22 +12,20 @@ class Router
 {
     private array $routes = [];
 
-    public function __construct(private Container $container)
-    {
-    }
+    public function __construct(private Container $container) {}
 
-    public function registerRoutesFromControllerAttributes(array $controllers)
+    public function registerRoutesFromControllerAttributes(array $controllers): void
     {
-        foreach($controllers as $controller) {
+        foreach ($controllers as $controller) {
             $reflectionController = new \ReflectionClass($controller);
 
-            foreach($reflectionController->getMethods() as $method) {
+            foreach ($reflectionController->getMethods() as $method) {
                 $attributes = $method->getAttributes(Route::class, \ReflectionAttribute::IS_INSTANCEOF);
 
-                foreach($attributes as $attribute) {
+                foreach ($attributes as $attribute) {
                     $route = $attribute->newInstance();
 
-                    $this->register($route->method->value, $route->routePath, [$controller, $method->getName()]);
+                    $this->register($route->method, $route->routePath, [$controller, $method->getName()]);
                 }
             }
         }
@@ -60,7 +58,7 @@ class Router
         $route = explode('?', $requestUri)[0];
         $action = $this->routes[$requestMethod][$route] ?? null;
 
-        if (! $action) {
+        if (!$action) {
             throw new RouteNotFoundException();
         }
 
