@@ -2,51 +2,26 @@
 
 declare(strict_types=1);
 
-use App\Config;
-use App\Controllers\HomeController;
-use App\Controllers\InvoiceController;
-use DI\Container;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
-use Twig\Extra\Intl\IntlExtension;
-
-use function DI\create;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
-const STORAGE_PATH = __DIR__ . '/../storage';
-const VIEW_PATH = __DIR__ . '/../views';
+require_once __DIR__ . '/../configs/path_constants.php';
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-$container = new Container();
-
-$container->set(Config::class, create(Config::class)->constructor($_ENV));
-$container->set(EntityManager::class, fn(Config $config)
-    => EntityManager::create(
-    $config->db,
-    ORMSetup::createAttributeMetadataConfiguration([__DIR__ . '../app/Entity']),
-));
+$container = require_once CONFIG_PATH . '/container.php';
+$registerRoutes = require_once CONFIG_PATH . '/routes.php';
 
 AppFactory::setContainer($container);
 
 $app = AppFactory::create();
 
-$app->get('/', [HomeController::class, 'index']);
-$app->get('/invoices', [InvoiceController::class, 'index']);
+$registerRoutes($app);
 
-$twig = Twig::create(VIEW_PATH, [
-    'cache'       => STORAGE_PATH . '/cache',
-    'auto_reload' => true,
-]);
-
-$twig->addExtension(new IntlExtension());
-
-$app->add(TwigMiddleware::create($app, $twig));
+$app->add(TwigMiddleware::create($app, $container->get(Twig::class)));
 
 $app->run();
